@@ -1,5 +1,5 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import querySlice from "../reducers/query.reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import querySlice from "./reducers/query.reducer";
 
 const store = configureStore({
 	reducer: {
