@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import querySlice from "./reducers/query.reducer";
+import apiCache from "./reducers/apiCache.reducer";
 
 const store = configureStore({
 	reducer: {
-		query: querySlice,
+		apiCache: apiCache,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });

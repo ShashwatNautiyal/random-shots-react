@@ -3,14 +3,16 @@ import {
 	setSuccessResponse,
 	setFetchingResponse,
 	setErrorResponse,
-} from "../../store/reducers/query.reducer";
+} from "../../store/reducers/apiCache.reducer";
 import { useAppDispatch, useAppSelector } from "./reducer";
+import { useCacheStorage } from "./useCacheStorage";
 
 type InfiniteApiReturnType<DataT, ErrorT> =
 	| {
 			status: "success";
 			data: DataT[];
 			error?: null;
+			expiresIn?: Date;
 			isFetchingNextPage: boolean;
 			hasNextPage: boolean;
 			fetchNextPage: () => void;
@@ -37,7 +39,7 @@ export const useInfiniteApi = <DataT, ErrorT>(
 	fetchFunction: ({ pageParam }: { pageParam?: number }) => Promise<DataT>,
 	paramFunctions: { getNextPageParam: (lastPage: DataT) => number | undefined }
 ): InfiniteApiReturnType<DataT, ErrorT> => {
-	const cache = useAppSelector((state) => state.query);
+	const cache = useAppSelector((state) => state.apiCache);
 	const dispatch = useAppDispatch();
 
 	const key = _key.join(" ");
@@ -49,11 +51,18 @@ export const useInfiniteApi = <DataT, ErrorT>(
 	const [error, setError] = useState<ErrorT | undefined | null>();
 
 	const [hasNextPage, setHasNextPage] = useState(true);
+	const [expiresIn, setExpiresIn] = useState<Date>();
 
 	const [isFetchingNextPage, setIsFetchingNextPage] = useState(false);
+	const localData = useCacheStorage<DataT[]>(key);
 
 	useEffect(() => {
-		if (!cache[key]) {
+		if (localData) {
+			setStatus(localData.status);
+			setData(localData.data);
+			setError(localData.error);
+			setExpiresIn(localData.expiresIn);
+		} else if (!cache[key]) {
 			const fetchApi = async () => {
 				setStatus("fetching");
 				dispatch(setFetchingResponse({ key, data: null, error: null }));
@@ -61,7 +70,15 @@ export const useInfiniteApi = <DataT, ErrorT>(
 					const data = await fetchFunction({ pageParam: undefined });
 					const nextPage = paramFunctions.getNextPageParam(data);
 					if (nextPage) setHasNextPage(true);
-					dispatch(setSuccessResponse({ key, data: [data], error: null }));
+					dispatch(
+						setSuccessResponse({
+							key,
+							data: [data],
+							error: null,
+							storeInStorage: "local",
+							timeout: 1 * 60 * 1000,
+						})
+					);
 					setData([data]);
 					setStatus("success");
 				} catch (error) {
@@ -122,6 +139,7 @@ export const useInfiniteApi = <DataT, ErrorT>(
 			data: data as DataT[],
 			error: null,
 			isFetchingNextPage,
+			expiresIn,
 			hasNextPage,
 			fetchNextPage,
 		};
