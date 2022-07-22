@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
-import { Blurhash, BlurhashCanvas } from "react-blurhash";
 import { classNames } from "../../utils";
+import { Blurhash } from "../Blurhash";
 
 const Image = ({
 	urls,
@@ -46,7 +46,7 @@ const Image = ({
 	return (
 		<span style={{ position: "relative" }} className={className}>
 			{showBlurhash && blurHash && (
-				<BlurhashCanvas
+				<Blurhash
 					hash={blurHash}
 					style={imageCustomStyles}
 					className="absolute inset-0 w-full h-full"

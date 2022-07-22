@@ -76,10 +76,13 @@ export const Sidebar = () => {
 							{data?.tags.aggregated
 								.filter((item) => item.source !== undefined)
 								.slice(0, 12)
-								.map((tag) => {
+								.map((tag, index) => {
 									if (tag.source) {
 										return (
-											<div className="flex flex-col text-center gap-2">
+											<div
+												key={index}
+												className="flex flex-col text-center gap-2"
+											>
 												<div className="h-16 w-16 mx-auto">
 													<Image
 														imageCustomStyles={{
@@ -133,9 +136,12 @@ const Loading = (
 		<div className="lg:grid lg:grid-cols-3 lg:gap-5 flex gap-10 overflow-scroll py-8 no-scrollbar">
 			{Array(9)
 				.fill(0)
-				.map((_) => {
+				.map((_, index) => {
 					return (
-						<div className="h-[70px] w-[70px] mx-auto bg-gray-400 rounded-full flex-shrink-0"></div>
+						<div
+							key={index}
+							className="h-[70px] w-[70px] mx-auto bg-gray-400 rounded-full flex-shrink-0"
+						></div>
 					);
 				})}
 		</div>

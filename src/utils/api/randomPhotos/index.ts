@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { useCacheApi } from "../../hooks/useCacheApi";
 import { useInfiniteApi } from "../../hooks/useInfiniteApi";
-import { RandomPhoto } from "../../../types/random";
+import { RandomPhoto } from "../../types/random";
 import { privateAxios } from "../../axios";
 
 export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics?: string) => {

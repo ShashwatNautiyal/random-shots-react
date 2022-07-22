@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { useCacheApi } from "../../hooks/useCacheApi";
-import { Topic } from "../../../types/topic";
+import { Topic } from "../../types/topic";
 import { privateAxios } from "../../axios";
 
 export const useTopicList = (

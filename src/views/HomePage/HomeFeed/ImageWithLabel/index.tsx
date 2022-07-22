@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Image from "../../../../common/Image";
-import { RandomPhoto } from "../../../../types/random";
+import { RandomPhoto } from "../../../../utils/types/random";
 import { classNames } from "../../../../utils";
 
 export const ImageWithLabel = ({
@@ -30,11 +30,11 @@ export const ImageWithLabel = ({
 				<Link to={`/user/${randomPhoto.user.username}`}>
 					<div
 						style={{
-							background: `${randomPhoto.color}`,
+							background: `${randomPhoto.color}aa`,
 						}}
-						className="absolute backdrop-blur w-fit shadow-2xl shadow-red-900 rounded-md m-2 py-2 px-3 bottom-0 flex items-center gap-2"
+						className="absolute backdrop-blur w-fit rounded-md m-2 py-2 px-3 bottom-0 flex items-center gap-2"
 					>
-						<div className="absolute inset-0 bg-black bg-opacity-30 hover:bg-opacity-40 transition-all rounded-md"></div>
+						<div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-40 transition-all rounded-md"></div>
 						<div className="h-10 w-10 pointer-events-none">
 							<Image
 								imageCustomStyles={{ borderRadius: "9999px" }}

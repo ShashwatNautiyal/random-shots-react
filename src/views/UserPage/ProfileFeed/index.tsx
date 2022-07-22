@@ -67,15 +67,13 @@ export const ProfileFeed = () => {
 								/>
 								<div
 									style={{
-										backdropFilter: "blur(40px)",
-										WebkitMask: `linear-gradient(transparent, ${photo.color} 70%)`,
-										mask: `linear-gradient(transparent, ${photo.color} 70%)`,
+										background: `${photo.color}aa`,
 									}}
-									className="absolute inset-x-0 h-1/2 bottom-0"
-								/>
-								<div className="absolute w-full py-4 px-6 bottom-0 flex items-center font-satisfy gap-2">
-									<AiFillHeart className="h-8 w-8 text-white" />
-									<p className="text-white text-lg">{photo.likes}</p>
+									className="absolute backdrop-blur w-fit rounded-md m-2 py-2 px-3 bottom-0 flex items-center gap-2"
+								>
+									<div className="absolute inset-0 bg-black bg-opacity-10 rounded-md"></div>
+									<AiFillHeart className="h-7 w-7 text-white z-10" />
+									<p className="text-white text-lg z-10">{photo.likes}</p>
 								</div>
 							</div>
 						))
