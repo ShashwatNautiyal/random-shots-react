@@ -76,7 +76,7 @@ export const useInfiniteApi = <DataT, ErrorT>(
 							data: [data],
 							error: null,
 							storeInStorage: "local",
-							timeout: 1 * 60 * 1000,
+							timeout: 15 * 60 * 1000,
 						})
 					);
 					setData([data]);

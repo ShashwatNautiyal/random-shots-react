@@ -48,7 +48,7 @@ export const useCacheApi = <DataT, ErrorT>(
 							key,
 							data,
 							error: null,
-							storeInStorage: "session",
+							storeInStorage: "local",
 							timeout: 15 * 60 * 1000,
 						})
 					);
