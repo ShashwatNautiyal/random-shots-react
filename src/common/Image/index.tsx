@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useState } from "react";
 import { classNames } from "../../utils";
 import { Blurhash } from "../Blurhash";
 
@@ -51,8 +51,8 @@ const Image = ({
 					style={imageCustomStyles}
 					className="absolute inset-0 w-full h-full"
 					punch={4}
-					height={12}
-					width={12}
+					height={32}
+					width={32}
 				/>
 			)}
 			<img
@@ -66,7 +66,7 @@ const Image = ({
 					"transition-opacity duration-300 h-full w-full"
 				)}
 				alt={alt}
-				src={urls.full}
+				src={src}
 			/>
 		</span>
 	);

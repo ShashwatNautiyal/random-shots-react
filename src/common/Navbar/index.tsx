@@ -4,11 +4,12 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { TbSend } from "react-icons/tb";
 import { RiMovieLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../../router/webRoutes";
 
 const Navbar = () => {
 	return (
 		<div className="px-2 max-w-[1400px] mx-auto flex justify-between py-6">
-			<Link to="/">
+			<Link to={ROUTES.HOME}>
 				<p className="flex gap-3 items-center">
 					<CgAbstract className="h-8 w-8" />
 					<span className="font-satisfy text-3xl">Growwgram</span>

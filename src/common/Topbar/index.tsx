@@ -3,6 +3,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { useTopicList } from "../../utils/api/topics";
 import { classNames } from "../../utils";
 import Image from "../Image";
+import { ROUTES } from "../../router/webRoutes";
 
 const Topbar = () => {
 	const { status, data: topicList, error } = useTopicList();
@@ -58,7 +59,7 @@ const Topbar = () => {
 						}}
 						className={"px-3"}
 						key={topic.id}
-						to={`/topic/${topic.id}`}
+						to={ROUTES.TOPIC + `${topic.id}`}
 					>
 						<span className="flex flex-col text-center text-sm gap-3 flex-shrink-0 pointer-events-none">
 							<Image

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Image from "../../../../common/Image";
 import { RandomPhoto } from "../../../../utils/types/random";
 import { classNames } from "../../../../utils";
+import { ROUTES } from "../../../../router/webRoutes";
 
 export const ImageWithLabel = ({
 	randomPhoto,
@@ -27,7 +28,7 @@ export const ImageWithLabel = ({
 					src={randomPhoto.urls.small}
 				/>
 
-				<Link to={`/user/${randomPhoto.user.username}`}>
+				<Link to={ROUTES.USER + `${randomPhoto.user.username}`}>
 					<div
 						style={{
 							background: `${randomPhoto.color}aa`,
@@ -66,7 +67,7 @@ export const ImageWithLabel = ({
 					src={randomPhoto.urls.small}
 				/>
 
-				<Link to={`/user/${randomPhoto.user.username}`}>
+				<Link to={ROUTES.USER + `${randomPhoto.user.username}`}>
 					<div
 						style={{
 							background: `${randomPhoto.color}aa`,
