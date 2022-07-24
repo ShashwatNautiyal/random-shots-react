@@ -3,11 +3,12 @@ import {
 	setSuccessResponse,
 	setFetchingResponse,
 	setErrorResponse,
-} from "../../store/reducers/query.reducer";
+} from "../../store/reducers/apiCache.reducer";
 import { useAppDispatch, useAppSelector } from "./reducer";
+import { useCacheStorage } from "./useCacheStorage";
 
 type CacheApiReturnType<DataT, ErrorT> =
-	| { status: "success"; data: DataT; error?: null }
+	| { status: "success"; data: DataT; error?: null; expiresIn?: Date }
 	| { status: "error"; data?: null; error: ErrorT }
 	| { status: "fetching"; data?: null; error?: null };
 
@@ -15,7 +16,7 @@ export const useCacheApi = <DataT, ErrorT>(
 	_key: any[],
 	func: () => Promise<DataT>
 ): CacheApiReturnType<DataT, ErrorT> => {
-	const cache = useAppSelector((state) => state.query);
+	const cache = useAppSelector((state) => state.apiCache);
 	const dispatch = useAppDispatch();
 
 	const key = _key.join(" ");
@@ -26,14 +27,31 @@ export const useCacheApi = <DataT, ErrorT>(
 
 	const [error, setError] = useState<ErrorT | undefined | null>();
 
+	const [expiresIn, setExpiresIn] = useState<Date>();
+
+	const localData = useCacheStorage<DataT>(key);
+
 	useEffect(() => {
-		if (!cache[key]) {
+		if (localData) {
+			setStatus(localData.status);
+			setData(localData.data);
+			setError(localData.error);
+			setExpiresIn(localData.expiresIn);
+		} else if (!cache[key]) {
 			const fetchApi = async () => {
 				dispatch(setFetchingResponse({ key, data: null, error: null }));
 				setStatus("fetching");
 				try {
 					const data = await func();
-					dispatch(setSuccessResponse({ key, data, error: null }));
+					dispatch(
+						setSuccessResponse({
+							key,
+							data,
+							error: null,
+							storeInStorage: "local",
+							timeout: 15 * 60 * 1000,
+						})
+					);
 					setData(data);
 					setStatus("success");
 				} catch (error) {
@@ -67,7 +85,7 @@ export const useCacheApi = <DataT, ErrorT>(
 	}
 
 	if (status === "success") {
-		return { status, data: data as DataT, error: null };
+		return { status, data: data as DataT, error: null, expiresIn };
 	}
 
 	return { status, data: null, error: error as ErrorT };

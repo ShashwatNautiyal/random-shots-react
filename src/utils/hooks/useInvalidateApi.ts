@@ -1,8 +1,8 @@
-import { deleteResponse } from "../../store/reducers/query.reducer";
+import { deleteResponse } from "../../store/reducers/apiCache.reducer";
 import { useAppDispatch, useAppSelector } from "./reducer";
 
 export const useInvalidateApi = () => {
-	const cache = useAppSelector((state) => state.query);
+	const cache = useAppSelector((state) => state);
 	const dispatch = useAppDispatch();
 
 	const invalidate = (keys: string[]) => {

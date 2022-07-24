@@ -17,7 +17,6 @@ const Topbar = () => {
 
 	useEffect(() => {
 		if (ref.current) {
-			console.log(ref.current);
 			// @ts-ignore
 			setUnderlineOffsetWidth(ref.current.offsetLeft);
 			// @ts-ignore
