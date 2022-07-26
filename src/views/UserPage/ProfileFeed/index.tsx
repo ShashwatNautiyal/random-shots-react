@@ -128,7 +128,7 @@ export const ProfileFeed = () => {
 										)}
 									></div>
 								))}
-							{Array(2)
+							{Array(1)
 								.fill(0)
 								.map((item, index) => (
 									<div
