@@ -3,9 +3,12 @@ import { useUserProfile } from "../../../utils/api/user";
 import Image from "../../../common/Image";
 import PrimaryButton from "../../../common/PrimaryButton";
 import LoadingLayout from "../../../common/LoadingLayout";
+import { useState } from "react";
 
 export const Sidebar = () => {
 	const { username } = useParams();
+
+	const [isFollowing, setIsFollowing] = useState(false);
 
 	const { data, status, error } = useUserProfile(username);
 
@@ -54,7 +57,13 @@ export const Sidebar = () => {
 								<p className="text-gray-500">{"following"}</p>
 							</div>
 						</div>
-						<PrimaryButton text="Follow" bgColor="bg-blue-600" />
+						<PrimaryButton
+							onClick={() => setIsFollowing((prev) => !prev)}
+							text={isFollowing ? "Following" : "Follow"}
+							bgColor={isFollowing ? "bg-white" : "bg-blue-600"}
+							textColor={isFollowing ? "text-black" : "text-white"}
+							borderColor={isFollowing ? "border-black" : "border-transparent"}
+						/>
 
 						<div className="mt-8">
 							<h1 className="font-semibold">{data?.name}</h1>

@@ -6,6 +6,8 @@ import Modal from "../../../common/Modal";
 import { useState } from "react";
 import { RandomPhoto } from "../../../utils/types/random";
 import Image from "../../../common/Image";
+import { privateAxios } from "../../../utils/axios";
+import { AxiosResponse } from "axios";
 
 export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 	const { data, hasNextPage, isFetchingNextPage, fetchNextPage, status } =
@@ -13,6 +15,29 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 
 	const [photo, setPhoto] = useState<RandomPhoto>();
 	const [show, setShow] = useState(false);
+
+	const handleDownload = async (downloadLocation?: string, name?: string) => {
+		try {
+			if (!downloadLocation) return;
+			const {
+				data: { url },
+			} = (await privateAxios.get(downloadLocation, { baseURL: "" })) as AxiosResponse<{
+				url: string;
+			}>;
+			const image = await fetch(url);
+			const imageBlog = await image.blob();
+			const imageURL = URL.createObjectURL(imageBlog);
+
+			const link = document.createElement("a");
+			link.href = imageURL;
+			link.download = name ?? "unsplash-photo";
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<>
@@ -29,6 +54,55 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 						src={photo?.urls.regular ?? ""}
 						urls={photo?.urls ?? {}}
 					/>
+				</div>
+				<div className="absolute bottom-0 flex sm:flex-row flex-col-reverse sm:m-2 m-1 sm:gap-2 gap-1">
+					<div
+						style={{
+							background: `${photo?.color}aa`,
+						}}
+						className="relative backdrop-blur w-fit rounded-md py-2 px-3 flex items-center"
+					>
+						<div className="absolute inset-0 bg-black bg-opacity-10 rounded-md"></div>
+
+						<p className="text-white sm:font-medium font-normal sm:text-base text-sm z-20">
+							Photo by{" "}
+							<a
+								target={"_blank"}
+								className="text-blue-600 underline"
+								href={`https://unsplash.com/@${photo?.user.username}?utm_source=https://unsplash-gram.vercel.app/&utm_medium=referral`}
+							>
+								@{photo?.user.username}
+							</a>{" "}
+							on{" "}
+							<a
+								target={"_blank"}
+								className="text-blue-600 underline"
+								href="https://unsplash.com/?utm_source=https://unsplash-gram.vercel.app/&utm_medium=referral"
+							>
+								Unsplash
+							</a>
+						</p>
+					</div>
+					<div
+						style={{
+							background: `${photo?.color}aa`,
+						}}
+						className="relative backdrop-blur w-fit rounded-md py-2 px-3 flex items-center"
+					>
+						<div
+							onClick={() =>
+								handleDownload(
+									photo?.links.download_location,
+									`${photo?.user.name}-${photo?.id}`
+								)
+							}
+							className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 rounded-md cursor-pointer"
+						></div>
+
+						<p className="text-white font-normal z-20 pointer-events-none sm:font-medium  sm:text-base text-sm">
+							Download
+						</p>
+					</div>
 				</div>
 			</Modal>
 			<InfiniteScroll
@@ -101,6 +175,7 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 					{data?.map((item) =>
 						item.result.map((randomPhoto, index) => (
 							<ImageWithLabel
+								style={{ cursor: "pointer" }}
 								onClick={() => {
 									setPhoto(randomPhoto);
 									setShow(true);

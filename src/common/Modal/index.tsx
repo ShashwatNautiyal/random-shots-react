@@ -11,6 +11,12 @@ const Modal = ({
 	show: boolean;
 	setShow: () => void;
 }) => {
+	if (show) {
+		document.body.style.overflow = "hidden";
+	} else {
+		document.body.style.overflow = "";
+	}
+
 	return (
 		<Transition appear show={show} as={Fragment}>
 			<div
@@ -29,13 +35,13 @@ const Modal = ({
 				>
 					<div
 						onClick={setShow}
-						className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm"
+						className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md"
 					/>
 				</Transition.Child>
 
 				<div className="flex min-h-full items-center justify-center text-center">
 					<Transition.Child
-						as={Fragment}
+						as={"div"}
 						enter="ease-out duration-300"
 						enterFrom="opacity-0 scale-95"
 						enterTo="opacity-100 scale-100"

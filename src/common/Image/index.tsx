@@ -13,7 +13,7 @@ const Image = ({
 	src,
 	...rest
 }: {
-	urls: {
+	urls?: {
 		[key: string]: any;
 	};
 	blurHash?: string;
@@ -32,7 +32,7 @@ const Image = ({
 		setShowBlurhash(false);
 	};
 
-	for (let [key, value] of Object.entries(urls)) {
+	for (let [key, value] of Object.entries(urls ?? {})) {
 		if (value.includes("w=")) {
 			const url = `${value} ${
 				(value as string)
