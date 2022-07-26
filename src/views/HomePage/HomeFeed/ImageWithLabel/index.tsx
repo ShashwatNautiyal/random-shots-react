@@ -63,6 +63,7 @@ export const ImageWithLabel = ({
 				)}
 			>
 				<Image
+					className="block h-full"
 					blurHash={randomPhoto.blur_hash}
 					loading="lazy"
 					alt={randomPhoto.description}
