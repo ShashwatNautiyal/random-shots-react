@@ -2,32 +2,36 @@ import { Link } from "react-router-dom";
 import Image from "../../../../common/Image";
 import { RandomPhoto } from "../../../../utils/types/random";
 import { classNames } from "../../../../utils";
+import { ROUTES } from "../../../../router/webRoutes";
 
 export const ImageWithLabel = ({
 	randomPhoto,
 	index,
+	...rest
 }: {
 	randomPhoto: RandomPhoto;
 	index: number;
-}) => {
+} & React.HTMLAttributes<HTMLDivElement>) => {
 	return (
 		<>
 			<div
+				{...rest}
 				className={classNames(
 					index === 0 || index === 11 ? "col-span-2 row-span-2" : "col-span-1",
 					"h-full w-full aspect-square relative lg:block hidden"
 				)}
 			>
 				<Image
+					className="block h-full"
+					src={randomPhoto.urls.regular}
 					blurHash={randomPhoto.blur_hash}
 					loading="lazy"
 					alt={randomPhoto.description}
-					objectFit="cover"
+					objectFit={"cover"}
 					urls={randomPhoto.urls}
-					src={randomPhoto.urls.small}
 				/>
 
-				<Link to={`/user/${randomPhoto.user.username}`}>
+				<Link to={ROUTES.USER + `${randomPhoto.user.username}`}>
 					<div
 						style={{
 							background: `${randomPhoto.color}aa`,
@@ -52,6 +56,7 @@ export const ImageWithLabel = ({
 				</Link>
 			</div>
 			<div
+				{...rest}
 				className={classNames(
 					index === 0 || index === 10 ? "md:col-span-2 md:row-span-2" : "col-span-1",
 					"h-full w-full aspect-square relative lg:hidden block"
@@ -66,7 +71,7 @@ export const ImageWithLabel = ({
 					src={randomPhoto.urls.small}
 				/>
 
-				<Link to={`/user/${randomPhoto.user.username}`}>
+				<Link to={ROUTES.USER + `${randomPhoto.user.username}`}>
 					<div
 						style={{
 							background: `${randomPhoto.color}aa`,

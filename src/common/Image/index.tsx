@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useState } from "react";
 import { classNames } from "../../utils";
 import { Blurhash } from "../Blurhash";
 
@@ -11,8 +11,9 @@ const Image = ({
 	objectFit = "cover",
 	imageCustomStyles,
 	src,
+	...rest
 }: {
-	urls: {
+	urls?: {
 		[key: string]: any;
 	};
 	blurHash?: string;
@@ -22,7 +23,7 @@ const Image = ({
 	className?: string;
 	imageCustomStyles?: CSSProperties;
 	src: string;
-}) => {
+} & Omit<React.HTMLAttributes<HTMLSpanElement>, "style">) => {
 	const [showBlurhash, setShowBlurhash] = useState(true);
 
 	const srcSet: string[] = [];
@@ -31,7 +32,7 @@ const Image = ({
 		setShowBlurhash(false);
 	};
 
-	for (let [key, value] of Object.entries(urls)) {
+	for (let [key, value] of Object.entries(urls ?? {})) {
 		if (value.includes("w=")) {
 			const url = `${value} ${
 				(value as string)
@@ -44,15 +45,15 @@ const Image = ({
 	}
 
 	return (
-		<span style={{ position: "relative" }} className={className}>
+		<span {...rest} style={{ position: "relative" }} className={className}>
 			{showBlurhash && blurHash && (
 				<Blurhash
-					hash={blurHash}
+					hash={blurHash ?? "LKF#2W0$w[Ne^%Ejs8NHENNGNxnN"}
 					style={imageCustomStyles}
 					className="absolute inset-0 w-full h-full"
-					punch={4}
-					height={12}
-					width={12}
+					punch={2}
+					height={32}
+					width={32}
 				/>
 			)}
 			<img
@@ -66,7 +67,7 @@ const Image = ({
 					"transition-opacity duration-300 h-full w-full"
 				)}
 				alt={alt}
-				src={urls.full}
+				src={src}
 			/>
 		</span>
 	);

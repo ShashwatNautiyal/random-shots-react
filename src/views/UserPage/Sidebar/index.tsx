@@ -3,9 +3,12 @@ import { useUserProfile } from "../../../utils/api/user";
 import Image from "../../../common/Image";
 import PrimaryButton from "../../../common/PrimaryButton";
 import LoadingLayout from "../../../common/LoadingLayout";
+import { useState } from "react";
 
 export const Sidebar = () => {
 	const { username } = useParams();
+
+	const [isFollowing, setIsFollowing] = useState(false);
 
 	const { data, status, error } = useUserProfile(username);
 
@@ -21,8 +24,8 @@ export const Sidebar = () => {
 								<Image
 									imageCustomStyles={{
 										borderRadius: "9999px",
-										outline: "2px solid #000000",
-										outlineOffset: "2px",
+										border: "2px solid black",
+										padding: "2px",
 									}}
 									urls={data!.profile_image}
 									src={data!.profile_image.medium}
@@ -54,7 +57,13 @@ export const Sidebar = () => {
 								<p className="text-gray-500">{"following"}</p>
 							</div>
 						</div>
-						<PrimaryButton text="Follow" bgColor="bg-blue-600" />
+						<PrimaryButton
+							onClick={() => setIsFollowing((prev) => !prev)}
+							text={isFollowing ? "Following" : "Follow"}
+							bgColor={isFollowing ? "bg-white" : "bg-blue-600"}
+							textColor={isFollowing ? "text-black" : "text-white"}
+							borderColor={isFollowing ? "border-black" : "border-transparent"}
+						/>
 
 						<div className="mt-8">
 							<h1 className="font-semibold">{data?.name}</h1>
@@ -87,8 +96,8 @@ export const Sidebar = () => {
 													<Image
 														imageCustomStyles={{
 															borderRadius: "9999px",
-															outline: "2px solid #9ca3af",
-															outlineOffset: "2px",
+															border: "2px solid #cccccc",
+															padding: "2px",
 														}}
 														urls={tag.source.cover_photo.urls}
 														loading="eager"
