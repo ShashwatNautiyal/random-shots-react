@@ -4,6 +4,9 @@ import { useUserProfilePhotos } from "../../../utils/api/user";
 import Image from "../../../common/Image";
 import InfiniteScroll from "../../../common/InfiniteScroll";
 import { classNames } from "../../../utils";
+import Modal from "../../../common/Modal";
+import { useState } from "react";
+import { UserPhoto } from "../../../utils/types/userPhotos";
 
 export const ProfileFeed = () => {
 	const { username } = useParams();
@@ -13,8 +16,26 @@ export const ProfileFeed = () => {
 		18
 	);
 
+	const [photo, setPhoto] = useState<UserPhoto>();
+	const [show, setShow] = useState(false);
+
 	return (
 		<div className="flex flex-col gap-5 w-full">
+			<Modal show={show} setShow={() => setShow(false)}>
+				<div className="shadow-2xl rounded-lg">
+					<Image
+						className="block h-full"
+						imageCustomStyles={{
+							borderRadius: "8px",
+							maxHeight: "90vh",
+							width: "100%",
+						}}
+						loading="eager"
+						src={photo?.urls.regular ?? ""}
+						urls={photo?.urls ?? {}}
+					/>
+				</div>
+			</Modal>
 			<InfiniteScroll
 				status={status}
 				fetchNextPage={fetchNextPage}
@@ -52,18 +73,24 @@ export const ProfileFeed = () => {
 				}
 			>
 				<div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-4 gap-5 max-w-[1500px]">
-					{data?.map((item) =>
+					{data?.map((item, index) =>
 						item.result.map((photo, index) => (
-							<div className="relative min-h-full min-w-full aspect-square">
+							<div
+								key={photo.id}
+								className="relative min-h-full min-w-full aspect-square"
+							>
 								<Image
+									onClick={() => {
+										setPhoto(photo);
+										setShow(true);
+									}}
 									blurHash={photo.blur_hash}
 									loading="lazy"
 									alt={photo.alt_description ?? ""}
 									objectFit="cover"
 									src={photo.urls.small}
-									key={photo.id}
 									urls={photo.urls}
-									className={classNames("")}
+									className={classNames("block h-full w-full")}
 								/>
 								<div
 									style={{

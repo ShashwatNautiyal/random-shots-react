@@ -11,6 +11,7 @@ const Image = ({
 	objectFit = "cover",
 	imageCustomStyles,
 	src,
+	...rest
 }: {
 	urls: {
 		[key: string]: any;
@@ -22,7 +23,7 @@ const Image = ({
 	className?: string;
 	imageCustomStyles?: CSSProperties;
 	src: string;
-}) => {
+} & Omit<React.HTMLAttributes<HTMLSpanElement>, "style">) => {
 	const [showBlurhash, setShowBlurhash] = useState(true);
 
 	const srcSet: string[] = [];
@@ -44,13 +45,13 @@ const Image = ({
 	}
 
 	return (
-		<span style={{ position: "relative" }} className={className}>
+		<span {...rest} style={{ position: "relative" }} className={className}>
 			{showBlurhash && blurHash && (
 				<Blurhash
-					hash={blurHash}
+					hash={blurHash ?? "LKF#2W0$w[Ne^%Ejs8NHENNGNxnN"}
 					style={imageCustomStyles}
 					className="absolute inset-0 w-full h-full"
-					punch={4}
+					punch={2}
 					height={32}
 					width={32}
 				/>

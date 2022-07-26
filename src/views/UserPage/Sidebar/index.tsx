@@ -21,8 +21,8 @@ export const Sidebar = () => {
 								<Image
 									imageCustomStyles={{
 										borderRadius: "9999px",
-										outline: "2px solid #000000",
-										outlineOffset: "2px",
+										border: "2px solid black",
+										padding: "2px",
 									}}
 									urls={data!.profile_image}
 									src={data!.profile_image.medium}
@@ -87,8 +87,8 @@ export const Sidebar = () => {
 													<Image
 														imageCustomStyles={{
 															borderRadius: "9999px",
-															outline: "2px solid #9ca3af",
-															outlineOffset: "2px",
+															border: "2px solid transparent",
+															padding: "2px",
 														}}
 														urls={tag.source.cover_photo.urls}
 														loading="eager"

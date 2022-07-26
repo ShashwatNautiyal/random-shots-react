@@ -22,14 +22,14 @@ export interface UserPhoto {
 	user: User;
 }
 
-export interface UserPhotoLinks {
+interface UserPhotoLinks {
 	self: string;
 	html: string;
 	download: string;
 	download_location: string;
 }
 
-export interface User {
+interface User {
 	id: string;
 	updated_at: Date;
 	username: string;
@@ -51,7 +51,7 @@ export interface User {
 	social: Social;
 }
 
-export interface UserLinks {
+interface UserLinks {
 	self: string;
 	html: string;
 	photos: string;
@@ -61,13 +61,13 @@ export interface UserLinks {
 	followers: string;
 }
 
-export interface ProfileImage {
+interface ProfileImage {
 	small: string;
 	medium: string;
 	large: string;
 }
 
-export interface Social {
+interface Social {
 	instagram_username: string;
 	portfolio_url: string;
 	twitter_username: string;
