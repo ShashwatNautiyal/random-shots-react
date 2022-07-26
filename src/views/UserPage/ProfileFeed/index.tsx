@@ -164,7 +164,7 @@ export const ProfileFeed = () => {
 									objectFit="cover"
 									src={photo.urls.small}
 									urls={photo.urls}
-									className={classNames("block h-full w-full")}
+									className={classNames("block h-full w-full cursor-pointer")}
 								/>
 								<LikeBtn photo={photo} />
 							</div>
