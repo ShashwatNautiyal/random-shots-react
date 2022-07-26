@@ -87,7 +87,7 @@ export const Sidebar = () => {
 													<Image
 														imageCustomStyles={{
 															borderRadius: "9999px",
-															border: "2px solid transparent",
+															border: "2px solid #cccccc",
 															padding: "2px",
 														}}
 														urls={tag.source.cover_photo.urls}
