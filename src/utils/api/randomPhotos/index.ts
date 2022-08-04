@@ -34,7 +34,7 @@ export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics
 		},
 		{
 			staleTime: 60 * 1000,
-			storeInStorage: "session",
+			storeInStorage: "local",
 		}
 	);
 };

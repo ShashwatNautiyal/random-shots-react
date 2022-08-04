@@ -11,7 +11,11 @@ export const useUserProfile = (username?: string) => {
 	}
 	return useCacheApi<User, AxiosError<{ errors?: string[] } | undefined | string>>(
 		["user", username],
-		() => privateAxios.get(`/users/${username}`).then((res) => res.data)
+		() => privateAxios.get(`/users/${username}`).then((res) => res.data),
+		{
+			staleTime: 60 * 1000,
+			storeInStorage: "local",
+		}
 	);
 };
 
@@ -57,6 +61,10 @@ export const useUserProfilePhotos = (
 		{
 			getNextPageParam: (lastPage) =>
 				lastPage.nextPage <= lastPage.totalPages ? lastPage.nextPage : undefined,
+		},
+		{
+			staleTime: 60 * 1000,
+			storeInStorage: "local",
 		}
 	);
 };
