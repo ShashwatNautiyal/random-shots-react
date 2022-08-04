@@ -1,0 +1,21 @@
+:root {
+	--lightTextColor: #000000;
+	--lightBgColor: #ffffff;
+	--darkTextColor: #ffffff;
+	--darkBgColor: #000000;
+}
+
+.rp001Container {
+	color: var(--lightTextColor);
+	background: var(--lightBgColor);
+	min-height: 100vh;
+	transition-property: background, color;
+	transition-duration: 500ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .rp001Container {
+	color: var(--darkTextColor);
+	background: var(--darkBgColor);
+	min-height: 100vh;
+}

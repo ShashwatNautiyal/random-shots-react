@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../common/Navbar";
 
+import "./rootPage.css";
+
 const RootPage = () => {
 	return (
-		<div className="dark:bg-black bg-white dark:text-white text-black transition-all duration-500 min-h-screen">
+		<div className="rp001Container">
 			<Navbar />
 			<Outlet />
 		</div>

@@ -9,7 +9,7 @@ export const useUserProfile = (username?: string) => {
 	if (!username) {
 		throw Error("username is not defined");
 	}
-	return useCacheApi<User, AxiosError<{ errors?: string[] } | undefined>>(
+	return useCacheApi<User, AxiosError<{ errors?: string[] } | undefined | string>>(
 		["user", username],
 		() => privateAxios.get(`/users/${username}`).then((res) => res.data)
 	);

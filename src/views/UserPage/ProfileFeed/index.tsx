@@ -9,7 +9,6 @@ import { UserPhoto } from "../../../utils/types/userPhoto";
 import PhotoPreview from "../../../common/PhotoPreview";
 import { LikeButton } from "../../../common/LikeButton";
 import { ProfileLoadingSkeleton } from "../../../common/LoadingSkeleton";
-import CustomError from "../../../common/CustomError";
 
 export const ProfileFeed = () => {
 	const { username } = useParams();
@@ -20,7 +19,7 @@ export const ProfileFeed = () => {
 	const [show, setShow] = useState(false);
 
 	if (data && data[0].totalPages === 0) {
-		return <p className="text-black text-lgs">This user has not posted anything yet</p>;
+		return <p className="text-lg">This user has not posted anything yet</p>;
 	}
 
 	return (

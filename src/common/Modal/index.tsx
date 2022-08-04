@@ -12,9 +12,9 @@ const Modal = ({
 	setShow: () => void;
 }) => {
 	if (show) {
-		document.body.style.overflow = "hidden";
+		document.documentElement.style.overflow = "hidden";
 	} else {
-		document.body.style.overflow = "";
+		document.documentElement.style.overflow = "";
 	}
 
 	return (

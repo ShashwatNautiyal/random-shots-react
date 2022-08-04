@@ -46,7 +46,7 @@ const Navbar = () => {
 			className={classNames(
 				showNavBg
 					? "dark:backdrop-brightness-50 dark:bg-transparent dark:bg-opacity-100 bg-gray-300 bg-opacity-75 shadow-lg"
-					: "dark:backdrop-brightness-100 dark:bg-transparent dark:bg-opacity-100 bg-transparent",
+					: "dark:backdrop-brightness-100 dark:bg-opacity-100",
 				"sticky top-0 z-30 backdrop-blur-md transition-[background] duration-500 px-4 md:py-5 py-3"
 			)}
 		>

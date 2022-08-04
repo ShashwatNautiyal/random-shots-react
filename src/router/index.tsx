@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { Component, ReactNode, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import loadable, { lazy } from "@loadable/component";
 import { ROUTES } from "./webRoutes";

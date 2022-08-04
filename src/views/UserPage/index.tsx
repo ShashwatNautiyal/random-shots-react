@@ -4,17 +4,20 @@ import { useUserProfile } from "../../utils/api/user";
 import { useParams } from "react-router-dom";
 import CustomError from "../../common/CustomError";
 
-const User = () => {
+const UserPage = () => {
 	const { username } = useParams();
 
 	const { data, status, error } = useUserProfile(username);
 
+	const errMessage =
+		typeof error?.response?.data === "object"
+			? error.response?.data.errors && error.response?.data.errors[0]
+			: error?.response?.data;
+
 	if (status === "error") {
 		return (
 			<CustomError
-				errMessage={
-					error.response?.data?.errors ? error.response?.data?.errors[0] : error.message
-				}
+				errMessage={errMessage ?? error.message}
 				statusCode={error.response?.status}
 			/>
 		);
@@ -28,4 +31,4 @@ const User = () => {
 	);
 };
 
-export default User;
+export default UserPage;
