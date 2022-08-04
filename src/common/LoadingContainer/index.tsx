@@ -1,12 +1,12 @@
 import { AxiosError } from "axios";
 import React, { ReactNode } from "react";
 
-const LoadingLayout = ({
+const LoadingContainer = ({
 	children,
 	loadingLayout,
 	status,
 }: {
-	children: ({ isError }: { isError: boolean }) => ReactNode;
+	children: ReactNode;
 	loadingLayout?: ReactNode;
 	status: "error" | "fetching" | "success";
 }) => {
@@ -22,7 +22,7 @@ const LoadingLayout = ({
 		);
 	}
 
-	return <>{children({ isError: status === "error" })}</>;
+	return <>{children}</>;
 };
 
-export default LoadingLayout;
+export default LoadingContainer;

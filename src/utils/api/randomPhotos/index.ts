@@ -1,9 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { useState } from "react";
-import { useCacheApi } from "../../hooks/useCacheApi";
-import { useInfiniteApi } from "../../hooks/useInfiniteApi";
 import { RandomPhoto } from "../../types/random";
 import { privateAxios } from "../../axios";
+import { useInfiniteApi } from "../../hooks/cacheApi/useInfiniteApi";
 
 export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics?: string) => {
 	return useInfiniteApi<
@@ -12,9 +10,9 @@ export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics
 			nextPage: number;
 			totalPages: number;
 		},
-		AxiosError
+		AxiosError<string | undefined>
 	>(
-		["randomPhotos", collections, topics, count],
+		["randomPhotos", count, collections, topics],
 		async ({ pageParam = 1 }) => {
 			return privateAxios
 				.get("photos/random", {
@@ -33,6 +31,10 @@ export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics
 		{
 			getNextPageParam: (lastPage) =>
 				lastPage.nextPage <= lastPage.totalPages ? lastPage.nextPage : undefined,
+		},
+		{
+			staleTime: 60 * 1000,
+			storeInStorage: "local",
 		}
 	);
 };

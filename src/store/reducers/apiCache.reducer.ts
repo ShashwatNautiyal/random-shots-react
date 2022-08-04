@@ -36,6 +36,7 @@ export const QuerySlice = createSlice({
 				sessionStorage.setItem(action.payload.key, JSON.stringify(_state));
 			} else if (action.payload.storeInStorage === "local")
 				localStorage.setItem(action.payload.key, JSON.stringify(_state));
+
 			state[action.payload.key] = _state;
 		},
 		setFetchingResponse: (
@@ -60,8 +61,7 @@ export const QuerySlice = createSlice({
 		},
 		deleteResponse: (state, action: PayloadAction<string>) => {
 			if (sessionStorage.getItem(action.payload)) sessionStorage.removeItem(action.payload);
-			if (localStorage.getItem(action.payload)) localStorage.removeItem(action.payload);
-			delete state[action.payload];
+			else if (localStorage.getItem(action.payload)) localStorage.removeItem(action.payload);
 		},
 	},
 });
