@@ -3,7 +3,7 @@ import Navbar from "../common/Navbar";
 
 const RootPage = () => {
 	return (
-		<div>
+		<div className="dark:bg-black bg-white dark:text-white text-black transition-all duration-500 min-h-screen">
 			<Navbar />
 			<Outlet />
 		</div>

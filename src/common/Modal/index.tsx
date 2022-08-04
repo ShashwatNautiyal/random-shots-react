@@ -35,7 +35,7 @@ const Modal = ({
 				>
 					<div
 						onClick={setShow}
-						className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md"
+						className="fixed inset-0 dark:bg-white bg-black dark:bg-opacity-40 bg-opacity-40 backdrop-blur-md"
 					/>
 				</Transition.Child>
 

@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { ReactNode, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -26,7 +27,7 @@ const InfiniteScroll = ({
 
 	return (
 		<>
-			{children}
+			{status === "success" && <>{children}</>}
 			{status === "fetching" && <>{loadingLayout}</>}
 			{hasNextPage && <div ref={ref}>{loadingLayout}</div>}
 		</>

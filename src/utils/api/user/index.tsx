@@ -1,16 +1,17 @@
 import { AxiosError } from "axios";
-import { useCacheApi } from "../../hooks/useCacheApi";
-import { useInfiniteApi } from "../../hooks/useInfiniteApi";
+import { useCacheApi } from "../../hooks/cacheApi/useCacheApi";
 import { User } from "../../types/user";
-import { UserPhoto } from "../../types/userPhotos";
+import { UserPhoto } from "../../types/userPhoto";
 import { privateAxios } from "../../axios";
+import { useInfiniteApi } from "../../hooks/cacheApi/useInfiniteApi";
 
 export const useUserProfile = (username?: string) => {
 	if (!username) {
 		throw Error("username is not defined");
 	}
-	return useCacheApi<User, AxiosError>(["user", username], () =>
-		privateAxios.get(`/users/${username}`).then((res) => res.data)
+	return useCacheApi<User, AxiosError<{ errors?: string[] } | undefined>>(
+		["user", username],
+		() => privateAxios.get(`/users/${username}`).then((res) => res.data)
 	);
 };
 
@@ -19,7 +20,7 @@ export const useUserProfilePhotos = (
 	page = 1,
 	per_page = 10,
 	order_by = "latest" as "latest" | "oldest" | "popular" | "views" | "downloads",
-	stats?: false,
+	stats = false,
 	orientation = "landscape" as "landscape" | "portrait" | "squarish"
 ) => {
 	if (!username) {
@@ -32,7 +33,7 @@ export const useUserProfilePhotos = (
 			nextPage: number;
 			totalPages: number;
 		},
-		AxiosError
+		AxiosError<{ errors: string[] } | undefined>
 	>(
 		["userPhotos", username, page, per_page, order_by, stats, orientation],
 		async ({ pageParam = page }) => {

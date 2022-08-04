@@ -18,21 +18,17 @@ const Topbar = () => {
 
 	useEffect(() => {
 		if (ref.current) {
-			// @ts-ignore
 			setUnderlineOffsetWidth(ref.current.offsetLeft);
-			// @ts-ignore
 			setUnderlineWidth(ref.current.offsetWidth);
 		} else if (!resolved.pathname.includes("topic")) {
-			// @ts-ignore
 			setUnderlineOffsetWidth(0);
-			// @ts-ignore
 			setUnderlineWidth(0);
 		}
 	}, [status, resolved.pathname]);
 
 	if (status === "fetching") {
 		return (
-			<div className="flex xl:justify-center justify-start my-8 overflow-x-auto no-scrollbar py-1">
+			<div className="flex xl:justify-center justify-start mt-8 overflow-x-auto no-scrollbar py-1">
 				{Array(10)
 					.fill(0)
 					.map((_, index) => (
@@ -46,7 +42,7 @@ const Topbar = () => {
 	}
 
 	return (
-		<div className="flex xl:justify-center justify-start my-8 overflow-x-scroll no-scrollbar">
+		<div className="flex xl:justify-center justify-start md:pt-8 pt-4 md:pb-6 pb-3 overflow-x-scroll no-scrollbar">
 			<div className={classNames("relative inline-flex py-1")}>
 				{topicList?.map((topic) => (
 					<Link
@@ -59,7 +55,7 @@ const Topbar = () => {
 						}}
 						className={"px-3"}
 						key={topic.id}
-						to={ROUTES.TOPIC + `${topic.id}`}
+						to={ROUTES.TOPIC.pathName + `${topic.id}`}
 					>
 						<span className="flex flex-col text-center text-sm gap-3 flex-shrink-0 pointer-events-none">
 							<Image
@@ -74,7 +70,9 @@ const Topbar = () => {
 							/>
 							<span
 								className={classNames(
-									paramTopicId === topic.id ? "text-gray-900" : "text-gray-600",
+									paramTopicId === topic.id
+										? "dark:text-white  text-gray-900"
+										: "dark:text-gray-300  text-gray-600",
 									"whitespace-nowrap transition-all duration-500"
 								)}
 							>
@@ -89,7 +87,7 @@ const Topbar = () => {
 							width: `${underlineWidth ? underlineWidth - 20 : 0}px`,
 							transform: `translateX(${underlineOffsetWidth + 10}px)`,
 						}}
-						className="block h-0.5 rounded-sm absolute bottom-0 bg-gray-900 transition-all duration-500"
+						className="block h-0.5 rounded-sm absolute bottom-0 dark:bg-white  bg-gray-900 transition-all duration-500"
 					></div>
 				}
 			</div>

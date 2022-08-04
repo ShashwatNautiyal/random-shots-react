@@ -1,6 +1,6 @@
 import { CSSProperties, useState } from "react";
 import { classNames } from "../../utils";
-import { Blurhash } from "../Blurhash";
+import { Blurhash } from "./Blurhash";
 
 const Image = ({
 	urls,
@@ -32,7 +32,7 @@ const Image = ({
 		setShowBlurhash(false);
 	};
 
-	for (let [key, value] of Object.entries(urls ?? {})) {
+	for (let [_, value] of Object.entries(urls ?? {})) {
 		if (value.includes("w=")) {
 			const url = `${value} ${
 				(value as string)

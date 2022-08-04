@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 type PrimaryButtonProps = {
 	text: string;
 	name?: string;
@@ -7,6 +9,7 @@ type PrimaryButtonProps = {
 	bgColor?: string;
 	textColor?: string;
 	borderColor?: string;
+	customStyle?: CSSProperties;
 };
 
 const PrimaryButton = (props: PrimaryButtonProps) => {
@@ -16,13 +19,15 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
 		onClick,
 		disabled,
 		type,
-		bgColor = "bg-red-500",
+		customStyle,
+		bgColor = "bg-blue-500",
 		textColor = "text-white",
-		borderColor = "border-black",
+		borderColor = "border-transparent",
 	} = props;
 	return (
 		<button
 			onClick={onClick}
+			style={customStyle}
 			name={name}
 			disabled={disabled}
 			type={type ?? "button"}

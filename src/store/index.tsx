@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import apiCache from "./reducers/apiCache.reducer";
+import themeReducer from "./reducers/theme.reducer";
 
 const store = configureStore({
 	reducer: {
 		apiCache: apiCache,
+		theme: themeReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
