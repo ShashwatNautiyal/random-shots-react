@@ -31,6 +31,8 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 		if (!expiresIn) return;
 		const expiresInMiliseconds = new Date(expiresIn).getTime() - new Date().getTime();
 
+		console.log(expiresInMiliseconds);
+
 		if (expiresInMiliseconds < 1) {
 			setShowNewPhotosBtn(false);
 			return;
@@ -57,8 +59,6 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 			/>
 		);
 	}
-
-	console.log(error, status);
 
 	return (
 		<>
@@ -87,7 +87,7 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 				</div>
 				<div
 					className={classNames(
-						showNewPhotosBtn ? "top-24" : "-top-10",
+						showNewPhotosBtn ? "md:top-24 top-28" : "-top-10",
 						"fixed mx-auto left-1/2 -translate-x-1/2 z-20 transition-all"
 					)}
 				>

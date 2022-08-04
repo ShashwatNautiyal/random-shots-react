@@ -3,6 +3,8 @@ import { AxiosError } from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../router/webRoutes";
 import PrimaryButton from "../PrimaryButton";
+import networkError from "./assets/networkError.json";
+import notFoundError from "./assets/notFoundError.json";
 
 const CustomError = ({ statusCode, errMessage }: { statusCode?: number; errMessage: string }) => {
 	const isOffline = statusCode === 0;
@@ -10,18 +12,19 @@ const CustomError = ({ statusCode, errMessage }: { statusCode?: number; errMessa
 
 	const location = useLocation();
 
-	const lottieSrc = isOffline
-		? "https://assets7.lottiefiles.com/packages/lf20_u2lfl3ty.json"
-		: "https://assets10.lottiefiles.com/packages/lf20_tuekfvlk.json";
+	const lottieSrc = isOffline ? networkError : notFoundError;
 
 	return (
 		<div className="flex md:flex-row flex-col-reverse w-full md:justify-around justify-center gap-8 items-center h-[90vh] max-w-7xl mx-auto">
 			<div className="flex flex-col gap-2 md:items-start items-center">
 				<p className="text-lg">{errCode && `${errCode} Error`} </p>
 				<p className="text-3xl font-semibold">{errMessage}</p>
-				{location.pathname !== "/" && (
+				{isOffline && (
+					<PrimaryButton text={"Reload page"} onClick={() => window.location.reload()} />
+				)}
+				{!isOffline && location.pathname !== "/" && (
 					<Link to={ROUTES.HOME.pathName} className="pt-2">
-						<PrimaryButton text="Back to Homepage" />
+						<PrimaryButton text={"Back to Homepage"} />
 					</Link>
 				)}
 			</div>
