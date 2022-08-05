@@ -1,14 +1,16 @@
 import { decode } from "blurhash";
 import { useEffect, useRef } from "react";
 
-type Props = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+type BlurhashProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
 	hash: string;
 	width?: number;
 	height?: number;
 	punch?: number;
 };
 
-export const Blurhash = ({ hash, width = 16, height = 16, punch = 1, ...rest }: Props) => {
+export const Blurhash = (props: BlurhashProps) => {
+	const { hash, width = 16, height = 16, punch = 1, ...rest } = props;
+
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {

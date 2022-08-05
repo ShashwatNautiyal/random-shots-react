@@ -1,16 +1,17 @@
 import { Transition } from "@headlessui/react";
 import { Fragment, ReactNode } from "react";
+
 import { classNames } from "../../utils";
 
-const Modal = ({
-	children,
-	show,
-	setShow,
-}: {
+type ModalProps = {
 	children: ReactNode;
 	show: boolean;
 	setShow: () => void;
-}) => {
+};
+
+const Modal = (props: ModalProps) => {
+	const { children, show, setShow } = props;
+
 	if (show) {
 		document.documentElement.style.overflow = "hidden";
 	} else {

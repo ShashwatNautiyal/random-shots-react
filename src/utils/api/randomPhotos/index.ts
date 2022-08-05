@@ -1,7 +1,9 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { RandomPhoto } from "../../types/random";
+import { AxiosError } from "axios";
+
 import { privateAxios } from "../../axios";
 import { useInfiniteApi } from "../../hooks/cacheApi/useInfiniteApi";
+
+import { RandomPhoto } from "../../types/random";
 
 export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics?: string) => {
 	return useInfiniteApi<

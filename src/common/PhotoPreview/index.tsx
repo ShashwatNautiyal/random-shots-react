@@ -1,12 +1,14 @@
-import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../router/webRoutes";
-import { classNames, downloadPhoto } from "../../utils";
+
+import Image from "../Image";
+import { LikeButton } from "../LikeButton";
+
+import { downloadPhoto } from "../../utils";
 import { RandomPhoto } from "../../utils/types/random";
 import { ResultPhoto } from "../../utils/types/search";
 import { UserPhoto } from "../../utils/types/userPhoto";
-import Image from "../Image";
-import { LikeButton } from "../LikeButton";
+
+import { ROUTES } from "../../router/webRoutes";
 
 function PhotoPreview({ photo }: { photo: RandomPhoto | UserPhoto | ResultPhoto | undefined }) {
 	return (
@@ -25,14 +27,14 @@ function PhotoPreview({ photo }: { photo: RandomPhoto | UserPhoto | ResultPhoto 
 				/>
 			</div>
 
-			<div className="absolute bottom-0 flex sm:flex-row flex-col-reverse sm:m-2 m-1 sm:gap-2 gap-1">
-				<LikeButton photo={photo!} />
+			<div className="absolute bottom-0 flex sm:flex-row flex-col sm:m-2 m-1 sm:gap-2 gap-1">
+				{photo && <LikeButton photo={photo} />}
 
 				<div
 					style={{
 						background: `${photo?.color}aa`,
 					}}
-					className="relative backdrop-blur w-fit rounded-md py-2 px-3 flex items-center"
+					className="relative backdrop-blur w-fit rounded-md py-2 px-3  items-center md:flex hidden"
 				>
 					<div className="absolute inset-0 bg-black bg-opacity-10 rounded-md"></div>
 

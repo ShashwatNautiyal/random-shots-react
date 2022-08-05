@@ -30,7 +30,7 @@ export interface User {
 	meta: Meta;
 }
 
-export interface UserLinks {
+interface UserLinks {
 	self: string;
 	html: string;
 	photos: string;
@@ -40,11 +40,11 @@ export interface UserLinks {
 	followers: string;
 }
 
-export interface Meta {
+interface Meta {
 	index: boolean;
 }
 
-export interface Photo {
+interface Photo {
 	id: string;
 	created_at: Date;
 	updated_at: Date;
@@ -52,7 +52,7 @@ export interface Photo {
 	urls: Urls;
 }
 
-export interface Urls {
+interface Urls {
 	raw: string;
 	full: string;
 	regular: string;
@@ -61,31 +61,31 @@ export interface Urls {
 	small_s3: string;
 }
 
-export interface ProfileImage {
+interface ProfileImage {
 	small: string;
 	medium: string;
 	large: string;
 }
 
-export interface Social {
+interface Social {
 	instagram_username: null | string;
 	portfolio_url: null | string;
 	twitter_username: null | string;
 	paypal_email: null;
 }
 
-export interface Tags {
+interface Tags {
 	custom: Custom[];
 	aggregated: Aggregated[];
 }
 
-export interface Aggregated {
+interface Aggregated {
 	type: Type;
 	title: string;
 	source?: AggregatedSource;
 }
 
-export interface AggregatedSource {
+interface AggregatedSource {
 	ancestry: Ancestry;
 	title: string;
 	subtitle: string;
@@ -95,18 +95,18 @@ export interface AggregatedSource {
 	cover_photo: PurpleCoverPhoto;
 }
 
-export interface Ancestry {
+interface Ancestry {
 	type: Category;
 	category?: Category;
 	subcategory?: Category;
 }
 
-export interface Category {
+interface Category {
 	slug: string;
 	pretty_slug: string;
 }
 
-export interface PurpleCoverPhoto {
+interface PurpleCoverPhoto {
 	id: string;
 	created_at: Date;
 	updated_at: Date;
@@ -128,14 +128,14 @@ export interface PurpleCoverPhoto {
 	user: UserClass;
 }
 
-export interface CoverPhotoLinks {
+interface CoverPhotoLinks {
 	self: string;
 	html: string;
 	download: string;
 	download_location: string;
 }
 
-export interface PurpleTopicSubmissions {
+interface PurpleTopicSubmissions {
 	"color-of-water"?: Animals;
 	architecture?: Animals;
 	wallpapers?: Animals;
@@ -149,7 +149,7 @@ export interface PurpleTopicSubmissions {
 	spirituality?: Animals;
 }
 
-export interface Animals {
+interface Animals {
 	status: Status;
 	approved_on: Date;
 }
@@ -158,7 +158,7 @@ export enum Status {
 	Approved = "approved",
 }
 
-export interface UserClass {
+interface UserClass {
 	id: string;
 	updated_at: Date;
 	username: string;
@@ -185,13 +185,13 @@ export enum Type {
 	Search = "search",
 }
 
-export interface Custom {
+interface Custom {
 	type: Type;
 	title: string;
 	source?: CustomSource;
 }
 
-export interface CustomSource {
+interface CustomSource {
 	ancestry: Ancestry;
 	title: string;
 	subtitle: string;
@@ -201,7 +201,7 @@ export interface CustomSource {
 	cover_photo: FluffyCoverPhoto;
 }
 
-export interface FluffyCoverPhoto {
+interface FluffyCoverPhoto {
 	id: string;
 	created_at: Date;
 	updated_at: Date;
@@ -223,7 +223,7 @@ export interface FluffyCoverPhoto {
 	user: UserClass;
 }
 
-export interface FluffyTopicSubmissions {
+interface FluffyTopicSubmissions {
 	"color-of-water"?: Animals;
 	architecture?: Animals;
 	wallpapers?: Animals;

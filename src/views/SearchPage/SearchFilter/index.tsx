@@ -1,19 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { FILTERS } from "../../../utils/types/common";
+import { FilterOptions } from "../../../utils/types/common";
 import { Filters } from "./Filters";
 
-export const SearchFilters = ({
-	mobileFiltersOpen,
-	setMobileFiltersOpen,
-	handleFilter,
-	searchParams,
-}: {
+type SearchFilterProps = {
 	mobileFiltersOpen: boolean;
 	setMobileFiltersOpen: Dispatch<SetStateAction<boolean>>;
 	handleFilter: (filterType: string, filterSelected: string) => void;
-	searchParams: Partial<FILTERS & { query: string }>;
-}) => {
+	searchParams: Partial<FilterOptions & { query: string }>;
+};
+
+export const SearchFilter = (props: SearchFilterProps) => {
+	const { mobileFiltersOpen, setMobileFiltersOpen, handleFilter, searchParams } = props;
+
 	return (
 		<div>
 			{/* Mobile filter dialog */}
@@ -53,6 +52,7 @@ export const SearchFilters = ({
 				</Dialog>
 			</Transition.Root>
 
+			{/* Desktop filter */}
 			<div className="lg:sticky lg:block hidden lg:top-[70px]">
 				<Filters handleFilter={handleFilter} searchParams={searchParams} />
 			</div>

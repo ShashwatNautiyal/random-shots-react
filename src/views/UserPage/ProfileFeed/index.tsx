@@ -1,19 +1,24 @@
 import { useParams } from "react-router-dom";
-import { useUserProfilePhotos } from "../../../utils/api/user";
-import Image from "../../../common/Image";
-import InfiniteScroll from "../../../common/InfiniteScroll";
-import { classNames } from "../../../utils";
-import Modal from "../../../common/Modal";
 import { useState } from "react";
-import { UserPhoto } from "../../../utils/types/userPhoto";
+
+import Image from "../../../common/Image";
+import Modal from "../../../common/Modal";
+import InfiniteScroll from "../../../common/InfiniteScroll";
 import PhotoPreview from "../../../common/PhotoPreview";
 import { LikeButton } from "../../../common/LikeButton";
-import { ProfileLoadingSkeleton } from "../../../common/LoadingSkeleton";
+import { ProfileLoading } from "../../../common/LoadingSkeleton";
+
+import { classNames } from "../../../utils";
+import { UserPhoto } from "../../../utils/types/userPhoto";
+import { useUserProfilePhotos } from "../../../utils/api/user";
 
 export const ProfileFeed = () => {
 	const { username } = useParams();
-	const { data, hasNextPage, isFetchingNextPage, fetchNextPage, status, error } =
-		useUserProfilePhotos(username, undefined, 18);
+	const { data, hasNextPage, isFetchingNextPage, fetchNextPage, status } = useUserProfilePhotos(
+		username,
+		undefined,
+		18
+	);
 
 	const [photo, setPhoto] = useState<UserPhoto>();
 	const [show, setShow] = useState(false);
@@ -32,11 +37,11 @@ export const ProfileFeed = () => {
 				fetchNextPage={fetchNextPage}
 				hasNextPage={hasNextPage}
 				isFetchingNextPage={isFetchingNextPage}
-				loadingLayout={<div className="px-4">{ProfileLoadingSkeleton}</div>}
+				loadingLayout={<div className="px-4">{ProfileLoading}</div>}
 			>
 				<div className="grid md:grid-cols-3 sm:grid-cols-2 px-4 gap-5 max-w-[1500px]">
-					{data?.map((item, index) =>
-						item.result.map((photo, index) => (
+					{data?.map((item) =>
+						item.result.map((photo) => (
 							<div
 								key={photo.id}
 								className="relative min-h-full min-w-full aspect-square"

@@ -1,18 +1,19 @@
-import { RadioGroup } from "@headlessui/react";
 import { Dispatch, SetStateAction } from "react";
+import { RadioGroup } from "@headlessui/react";
 import { AiFillCaretUp } from "react-icons/ai";
 import { BsFillArrowDownCircleFill, BsFillArrowUpCircleFill, BsSquareFill } from "react-icons/bs";
 import { IoCloseCircle, IoTabletLandscape, IoTabletPortrait } from "react-icons/io5";
 import { MdCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
+
+import { FilterOptions, FilterOptionsType } from "../../../../utils/types/common";
+
 import { classNames } from "../../../../utils";
-import { FILTERS } from "../../../../utils/types/common";
-import { FilterOptionsType } from "../../SearchTopbar";
 
 type FilterType = {
 	id: string;
 	name: string;
-	options: FilterOptionsType<FILTERS[Exclude<keyof FILTERS, "order_by">]>;
+	options: FilterOptionsType<FilterOptions[Exclude<keyof FilterOptions, "order_by">]>;
 }[];
 
 const filterOptions: FilterType = [
@@ -56,7 +57,7 @@ export const Filters = ({
 	setMobileFiltersOpen,
 }: {
 	handleFilter: (filterType: string, filterSelected: string) => void;
-	searchParams: Partial<FILTERS & { query: string }>;
+	searchParams: Partial<FilterOptions & { query: string }>;
 	setMobileFiltersOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const [_, setSearchParams] = useSearchParams();

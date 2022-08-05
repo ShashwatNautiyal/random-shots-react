@@ -1,32 +1,46 @@
+import { useState } from "react";
+
 import Image from "../../../common/Image";
 import PrimaryButton from "../../../common/PrimaryButton";
 import LoadingLayout from "../../../common/LoadingContainer";
-import { useState } from "react";
+
 import { useAppSelector } from "../../../utils/hooks/reducer";
 import { User } from "../../../utils/types/user";
+import { SidebarLoading } from "../../../common/LoadingSkeleton";
 
-export const Sidebar = ({
-	data,
-	status,
-}: {
+type SidebarProps = {
 	data: User | null | undefined;
 	status: "error" | "fetching" | "success";
-}) => {
+};
+
+export const Sidebar = (props: SidebarProps) => {
+	const { data, status } = props;
+
 	const [isFollowing, setIsFollowing] = useState(false);
 
-	const mode = useAppSelector((state) => state.theme.mode);
+	const themeMode = useAppSelector((state) => state.theme.mode);
+
+	const stories = data?.tags.aggregated.filter((item) => item.source !== undefined).slice(0, 12);
+
+	const imageCustomStyles = {
+		borderRadius: "9999px",
+		border: "2px solid #cccccc",
+		padding: "2px",
+	};
+
+	const userProfileCustomStyles = {
+		borderRadius: "9999px",
+		border: themeMode === "dark" ? "2px solid white" : "2px solid black",
+		padding: "2px",
+	};
 
 	return (
-		<LoadingLayout status={status} loadingLayout={Loading}>
+		<LoadingLayout status={status} loadingLayout={SidebarLoading}>
 			<div className="flex flex-col xl:w-[400px] lg:w-[300px] w-full flex-shrink-0 px-6 lg:h-fit lg:sticky lg:top-28 will-change-scroll">
 				<div className="flex justify-center">
 					<div className="h-16 w-16">
 						<Image
-							imageCustomStyles={{
-								borderRadius: "9999px",
-								border: mode === "dark" ? "2px solid white" : "2px solid black",
-								padding: "2px",
-							}}
+							imageCustomStyles={userProfileCustomStyles}
 							urls={data?.profile_image}
 							src={data?.profile_image.medium ?? ""}
 							loading="eager"
@@ -52,7 +66,9 @@ export const Sidebar = ({
 					</div>
 				</div>
 				<PrimaryButton
-					onClick={() => setIsFollowing((prev) => !prev)}
+					onClick={() => {
+						setIsFollowing((prev) => !prev);
+					}}
 					text={isFollowing ? "Following" : "Follow"}
 					bgColor={isFollowing ? "bg-white" : "bg-blue-600"}
 					textColor={isFollowing ? "text-black" : "text-white"}
@@ -64,7 +80,12 @@ export const Sidebar = ({
 
 					<h2 className="my-1">{data?.bio}</h2>
 
-					<a href={data?.portfolio_url} target="_blank" referrerPolicy="no-referrer">
+					<a
+						rel="noreferrer"
+						href={data?.portfolio_url}
+						target="_blank"
+						referrerPolicy="no-referrer"
+					>
 						<p className="text-blue-600 whitespace-nowrap overflow-hidden xl:w-[380px] lg:w-[280px] w-full text-ellipsis">
 							{data?.social.portfolio_url}
 						</p>
@@ -72,70 +93,25 @@ export const Sidebar = ({
 				</div>
 
 				<div className="lg:grid lg:grid-cols-3 lg:gap-3 flex gap-10 overflow-scroll py-8">
-					{data?.tags.aggregated
-						.filter((item) => item.source !== undefined)
-						.slice(0, 12)
-						.map((tag, index) => {
-							if (tag.source) {
-								return (
-									<div key={index} className="flex flex-col text-center gap-2">
-										<div className="h-16 w-16 mx-auto">
-											<Image
-												imageCustomStyles={{
-													borderRadius: "9999px",
-													border: "2px solid #cccccc",
-													padding: "2px",
-												}}
-												urls={tag.source.cover_photo.urls}
-												loading="eager"
-												alt={tag.title}
-												src={tag.source.cover_photo.urls.small}
-											/>
-										</div>
-										<h3 className="text-sm">{tag.title}</h3>
+					{stories?.map(
+						(tag, index) =>
+							tag.source && (
+								<div key={index} className="flex flex-col text-center gap-2">
+									<div className="h-16 w-16 mx-auto">
+										<Image
+											imageCustomStyles={imageCustomStyles}
+											urls={tag.source.cover_photo.urls}
+											loading="eager"
+											alt={tag.title}
+											src={tag.source.cover_photo.urls.small}
+										/>
 									</div>
-								);
-							}
-						})}
+									<h3 className="text-sm">{tag.title}</h3>
+								</div>
+							)
+					)}
 				</div>
 			</div>
 		</LoadingLayout>
 	);
 };
-
-const Loading = (
-	<div className="flex flex-col xl:w-[400px] lg:w-[300px] w-full flex-shrink-0 px-6 lg:h-screen lg:sticky lg:top-10 animate-pulse">
-		<div className="flex justify-center">
-			<div className="h-[70px] w-[70px] bg-gray-400 rounded-full"></div>
-		</div>
-
-		<div className="flex justify-around my-6">
-			<div className="flex flex-col text-center w-10 bg-gray-400 h-10 rounded-md"></div>
-
-			<div className="flex flex-col text-center w-10 bg-gray-400 h-10 rounded-md"></div>
-
-			<div className="flex flex-col text-center w-10 bg-gray-400 h-10 rounded-md"></div>
-		</div>
-		<PrimaryButton text="EMPTY" bgColor="bg-gray-400 text-transparent" />
-
-		<div className="mt-8 w-full flex flex-col">
-			<div className="bg-gray-400 font-semibold h-4 w-1/3 rounded-md"></div>
-
-			<div className="bg-gray-400 my-3 h-10 w-11/12 rounded-md"></div>
-			<div className="bg-gray-400 h-4 w-1/2 rounded-md"></div>
-		</div>
-
-		<div className="lg:grid lg:grid-cols-3 lg:gap-5 flex gap-10 overflow-scroll py-8 no-scrollbar">
-			{Array(9)
-				.fill(0)
-				.map((_, index) => {
-					return (
-						<div
-							key={index}
-							className="h-[70px] w-[70px] mx-auto bg-gray-400 rounded-full flex-shrink-0"
-						></div>
-					);
-				})}
-		</div>
-	</div>
-);

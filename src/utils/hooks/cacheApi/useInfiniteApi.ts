@@ -1,13 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+
+import { useCacheStorage } from "./useCacheStorage";
+
 import {
 	setErrorResponse,
 	setFetchingResponse,
 	setSuccessResponse,
 } from "../../../store/reducers/apiCache.reducer";
-import { privateAxios } from "../../axios";
 import { useAppDispatch, useAppSelector } from "../reducer";
-import { useCacheStorage } from "./useCacheStorage";
 
 type SuccessType<DataT> = {
 	status: "success";
