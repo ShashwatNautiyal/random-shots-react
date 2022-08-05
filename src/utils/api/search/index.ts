@@ -1,17 +1,19 @@
 import { AxiosError } from "axios";
+
 import { privateAxios } from "../../axios";
 import { useInfiniteApi } from "../../hooks/cacheApi/useInfiniteApi";
-import { FILTERS } from "../../types/common";
+
+import { FilterOptions } from "../../types/common";
 import { Search } from "../../types/search";
 
 export const useInfiniteSearch = (
 	query: string,
 	page: number = 1,
 	per_page: number = 22,
-	order_by?: FILTERS["order_by"],
-	color?: FILTERS["color"],
-	orientation?: FILTERS["orientation"],
-	content_filter?: FILTERS["content_filter"]
+	order_by?: FilterOptions["order_by"],
+	color?: FilterOptions["color"],
+	orientation?: FilterOptions["orientation"],
+	content_filter?: FilterOptions["content_filter"]
 ) => {
 	return useInfiniteApi<
 		{

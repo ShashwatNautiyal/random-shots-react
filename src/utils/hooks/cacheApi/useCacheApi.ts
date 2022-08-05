@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+
 import {
 	setSuccessResponse,
 	setFetchingResponse,
 	setErrorResponse,
 } from "../../../store/reducers/apiCache.reducer";
 import { useAppDispatch, useAppSelector } from "../reducer";
+
 import { useCacheStorage } from "./useCacheStorage";
 
 type CacheApiReturnType<DataT, ErrorT> =
@@ -44,6 +46,7 @@ export const useCacheApi = <DataT, ErrorT>(
 	const cache = useAppSelector((state) => state.apiCache);
 	const dispatch = useAppDispatch();
 
+	// Join all the keys to one key string
 	const key = _key.join(" ");
 
 	const [status, setStatus] = useState<"success" | "error" | "fetching">("fetching");
@@ -52,13 +55,17 @@ export const useCacheApi = <DataT, ErrorT>(
 	const [expiresIn, setExpiresIn] = useState<Date>();
 	const [isRefetching, setIsRefetching] = useState(false);
 
+	// Custom hook for cache data by key
 	const { cacheData, isStale } = useCacheStorage<DataT>(key);
 
+	// Default options
 	const {
 		staleTime = 5 * 60 * 1000,
 		storeInStorage = "session",
 		refetchOnStale = true,
 	} = options ?? {};
+
+	console.log(cacheData, isStale);
 
 	useEffect(() => {
 		if (cacheData) {
@@ -67,6 +74,7 @@ export const useCacheApi = <DataT, ErrorT>(
 			setError(cacheData.error);
 			setExpiresIn(cacheData.expiresIn);
 
+			// Refetch API if isStale or refetchOnStale is true
 			if (isStale && refetchOnStale) {
 				refetch();
 			}
@@ -101,18 +109,24 @@ export const useCacheApi = <DataT, ErrorT>(
 	const refetch = () => {
 		const fetchApi = async () => {
 			setIsRefetching(true);
-			const data = await fetchFunction();
-			dispatch(
-				setSuccessResponse({
-					key,
-					data,
-					error: null,
-					timeout: staleTime,
-				})
-			);
-			setData(data);
-			setIsRefetching(false);
-			setExpiresIn(new Date(new Date().getTime() + staleTime));
+			try {
+				const data = await fetchFunction();
+				dispatch(
+					setSuccessResponse({
+						key,
+						data,
+						error: null,
+						storeInStorage: storeInStorage,
+						timeout: staleTime,
+					})
+				);
+				setData(data);
+				setIsRefetching(false);
+				setExpiresIn(new Date(new Date().getTime() + staleTime));
+			} catch (error) {
+				setIsRefetching(false);
+				console.error(error);
+			}
 		};
 		fetchApi();
 	};

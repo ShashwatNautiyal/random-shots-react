@@ -1,18 +1,10 @@
 import { CSSProperties, useState } from "react";
-import { classNames } from "../../utils";
+
 import { Blurhash } from "./Blurhash";
 
-const Image = ({
-	urls,
-	blurHash,
-	loading,
-	alt,
-	className,
-	objectFit = "cover",
-	imageCustomStyles,
-	src,
-	...rest
-}: {
+import { classNames } from "../../utils";
+
+type ImageProps = {
 	urls?: {
 		[key: string]: any;
 	};
@@ -23,14 +15,24 @@ const Image = ({
 	className?: string;
 	imageCustomStyles?: CSSProperties;
 	src: string;
-} & Omit<React.HTMLAttributes<HTMLSpanElement>, "style">) => {
+} & Omit<React.HTMLAttributes<HTMLSpanElement>, "style">;
+
+const Image = (props: ImageProps) => {
+	const {
+		urls,
+		blurHash,
+		loading,
+		alt,
+		className,
+		objectFit = "cover",
+		imageCustomStyles,
+		src,
+		...rest
+	} = props;
+
 	const [showBlurhash, setShowBlurhash] = useState(true);
 
 	const srcSet: string[] = [];
-
-	const showImage = () => {
-		setShowBlurhash(false);
-	};
 
 	for (let [_, value] of Object.entries(urls ?? {})) {
 		if (value.includes("w=")) {
@@ -43,6 +45,10 @@ const Image = ({
 			srcSet.push(url);
 		}
 	}
+
+	const showImage = () => {
+		setShowBlurhash(false);
+	};
 
 	return (
 		<span {...rest} style={{ position: "relative" }} className={className}>

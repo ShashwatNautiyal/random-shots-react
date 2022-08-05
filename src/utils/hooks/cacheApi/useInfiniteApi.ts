@@ -1,13 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+
+import { useCacheStorage } from "./useCacheStorage";
+
 import {
 	setErrorResponse,
 	setFetchingResponse,
 	setSuccessResponse,
 } from "../../../store/reducers/apiCache.reducer";
-import { privateAxios } from "../../axios";
 import { useAppDispatch, useAppSelector } from "../reducer";
-import { useCacheStorage } from "./useCacheStorage";
 
 type SuccessType<DataT> = {
 	status: "success";
@@ -58,12 +58,14 @@ export const useInfiniteApi = <DataT, ErrorT>(
 ): InfiniteApiReturnType<DataT, ErrorT> => {
 	const dispatch = useAppDispatch();
 
+	// Default options
 	const {
 		staleTime = 5 * 60 * 1000,
 		storeInStorage = "session",
 		refetchOnStale = true,
 	} = options ?? {};
 
+	// Join all the keys to one key string
 	const key = _key.join(" ");
 
 	const cache = useAppSelector((state) => state.apiCache);

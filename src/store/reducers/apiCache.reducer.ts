@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "..";
 
 interface IApiResponse {
 	status: "fetching" | "success" | "error";

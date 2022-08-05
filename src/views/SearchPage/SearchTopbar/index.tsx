@@ -1,34 +1,27 @@
-import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
+
 import { classNames } from "../../../utils";
-import { FILTERS } from "../../../utils/types/common";
+import { FilterOptions, FilterOptionsType } from "../../../utils/types/common";
 
-export type FilterOptionsType<T> = {
-	value: T;
-	label: string;
-	Icon?: (props: React.ComponentProps<"svg">) => JSX.Element;
-}[];
-
-const sortOptions: FilterOptionsType<FILTERS["order_by"]> = [
+const sortOptions: FilterOptionsType<FilterOptions["order_by"]> = [
 	{ value: "relevant", label: "Relevant" },
 	{ value: "latest", label: "Lastest" },
 ];
 
-export const SearchTopbar = ({
-	total,
-	query,
-	order_by,
-	handleFilter,
-	setMobileFiltersOpen,
-}: {
+type SearchTopbarProps = {
 	total?: number;
 	query?: string;
 	order_by?: "latest" | "relevant";
 	handleFilter: (filterType: string, filterSelected: string) => void;
 	setMobileFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+};
+
+export const SearchTopbar = (props: SearchTopbarProps) => {
+	const { total, query, order_by, handleFilter, setMobileFiltersOpen } = props;
+
 	return (
 		<div className="relative flex items-baseline flex-wrap justify-between border-b border-gray-200 md:pb-5 ">
 			<h1 className="md:text-2xl text-lg font-semibold tracking-tight whitespace-nowrap overflow-clip text-ellipsis max-w-lg">

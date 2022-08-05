@@ -24,6 +24,7 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
 		textColor = "text-white",
 		borderColor = "border-transparent",
 	} = props;
+
 	return (
 		<button
 			onClick={onClick}

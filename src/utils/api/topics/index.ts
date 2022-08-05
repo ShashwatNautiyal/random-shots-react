@@ -1,7 +1,9 @@
 import { AxiosError } from "axios";
+
 import { useCacheApi } from "../../hooks/cacheApi/useCacheApi";
-import { Topic } from "../../types/topic";
 import { privateAxios } from "../../axios";
+
+import { Topic } from "../../types/topic";
 
 export const useTopicList = (
 	page = 1,
@@ -21,8 +23,8 @@ export const useTopicList = (
 				})
 				.then((res) => res.data),
 		{
-			staleTime: 60 * 60 * 1000,
-			storeInStorage: "session",
+			staleTime: 60 * 1000,
+			storeInStorage: "local",
 		}
 	);
 };

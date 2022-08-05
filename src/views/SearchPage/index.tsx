@@ -1,62 +1,70 @@
 import { useEffect, useState } from "react";
 import { FaSadTear } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
 import CustomError from "../../common/CustomError";
 import InfiniteScroll from "../../common/InfiniteScroll";
-import { HomeLoadingSkeleton, ProfileLoadingSkeleton } from "../../common/LoadingSkeleton";
+import { ProfileLoading } from "../../common/LoadingSkeleton";
 import Modal from "../../common/Modal";
+import { ImageWithLabel } from "../../common/ImageWithLabel";
 import PhotoPreview from "../../common/PhotoPreview";
-import { useInfiniteSearch } from "../../utils/api/search";
-import { FILTERS } from "../../utils/types/common";
-import { ResultPhoto } from "../../utils/types/search";
-import { ImageWithLabel } from "../HomePage/HomeFeed/ImageWithLabel";
 
-import { SearchFilters } from "./SearchFilter";
+import { useInfiniteSearch } from "../../utils/api/search";
+import { ResultPhoto } from "../../utils/types/search";
+import { FilterOptions } from "../../utils/types/common";
+
 import { SearchTopbar } from "./SearchTopbar";
+import { SearchFilter } from "./SearchFilter";
 
 const SearchPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
+
 	const [show, setShow] = useState(false);
-
 	const [photo, setPhoto] = useState<ResultPhoto>();
-
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!query) {
-			navigate("/");
+		// Navigate to previous page if query is empty
+		if (_searchParams.query === "") {
+			navigate(-1);
 		}
 	}, []);
 
-	const query = searchParams.get("query") ? (searchParams.get("query") as string) : undefined;
+	const getSearchParamsFromUrl = () => {
+		const query = searchParams.get("query") ? (searchParams.get("query") as string) : undefined;
+		const order_by = searchParams.get("order_by")
+			? (searchParams.get("order_by") as FilterOptions["order_by"])
+			: "relevant";
+		const orientation = searchParams.get("orientation")
+			? (searchParams.get("orientation") as FilterOptions["orientation"])
+			: undefined;
+		const content_filter = searchParams.get("content_filter")
+			? (searchParams.get("content_filter") as FilterOptions["content_filter"])
+			: undefined;
+		const color = searchParams.get("color")
+			? (searchParams.get("color") as FilterOptions["color"])
+			: undefined;
 
-	const order_by = searchParams.get("order_by")
-		? (searchParams.get("order_by") as FILTERS["order_by"])
-		: "relevant";
-	const orientation = searchParams.get("orientation")
-		? (searchParams.get("orientation") as FILTERS["orientation"])
-		: undefined;
-	const content_filter = searchParams.get("content_filter")
-		? (searchParams.get("content_filter") as FILTERS["content_filter"])
-		: undefined;
-	const color = searchParams.get("color")
-		? (searchParams.get("color") as FILTERS["color"])
-		: undefined;
+		return { query, order_by, color, orientation, content_filter };
+	};
 
-	const _searchParams = { query, order_by, color, orientation, content_filter };
+	const _searchParams = getSearchParamsFromUrl();
+	const { color, content_filter, order_by, orientation, query } = _searchParams;
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } =
 		useInfiniteSearch(query ?? "", undefined, 18, order_by, color, orientation, content_filter);
 
 	const handleFilter = (filterType: string, filterSelected: string) => {
+		// Delete undefined or null objects from _searchParams
 		for (const [key, value] of Object.entries(_searchParams)) {
 			if (value === null || value === undefined) {
 				delete _searchParams[key as keyof typeof _searchParams];
 			}
 		}
 
+		// Deselect selected filter
 		if (_searchParams[filterType as keyof typeof _searchParams] === filterSelected) {
 			delete _searchParams[filterType as keyof typeof _searchParams];
 			// @ts-ignore
@@ -93,7 +101,7 @@ const SearchPage = () => {
 				/>
 
 				<div className="flex">
-					<SearchFilters
+					<SearchFilter
 						mobileFiltersOpen={mobileFiltersOpen}
 						setMobileFiltersOpen={setMobileFiltersOpen}
 						handleFilter={handleFilter}
@@ -114,9 +122,7 @@ const SearchPage = () => {
 								fetchNextPage={fetchNextPage}
 								hasNextPage={hasNextPage}
 								isFetchingNextPage={isFetchingNextPage}
-								loadingLayout={
-									<div className="pt-5 lg:pl-5">{ProfileLoadingSkeleton}</div>
-								}
+								loadingLayout={<div className="pt-5 lg:pl-5">{ProfileLoading}</div>}
 							>
 								<div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:pl-4 gap-5 w-full pt-5">
 									{data?.map((item) =>

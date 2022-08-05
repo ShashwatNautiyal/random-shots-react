@@ -7,7 +7,7 @@ export interface Urls {
 	thumb: string;
 }
 
-export type FILTERS = {
+export type FilterOptions = {
 	order_by: "latest" | "relevant";
 	color:
 		| "black_and_white"
@@ -23,3 +23,9 @@ export type FILTERS = {
 	orientation: "landscape" | "portrait" | "squarish";
 	content_filter: "low" | "high";
 };
+
+export type FilterOptionsType<T> = {
+	value: T;
+	label: string;
+	Icon?: (props: React.ComponentProps<"svg">) => JSX.Element;
+}[];

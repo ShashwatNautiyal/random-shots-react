@@ -1,8 +1,10 @@
-import React, { Component, ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import loadable, { lazy } from "@loadable/component";
-import { ROUTES } from "./webRoutes";
+import loadable from "@loadable/component";
+
 import CustomError from "../common/CustomError";
+
+import { ROUTES } from "./webRoutes";
 
 const RootPage = loadable(() => import("../views"));
 const Home = loadable(() => import("../views/HomePage"));

@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
-import Topbar from "../../common/Topbar";
 import { HomeFeed } from "./HomeFeed";
+import HomeTopicBar from "./HomeTopicBar";
 
 const Home = () => {
 	const { topicId } = useParams();
 
 	return (
-		<div>
-			<Topbar />
+		<>
+			<HomeTopicBar />
 			<HomeFeed topicId={topicId} />
-		</div>
+		</>
 	);
 };
 

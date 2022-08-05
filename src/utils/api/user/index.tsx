@@ -1,9 +1,11 @@
 import { AxiosError } from "axios";
+
 import { useCacheApi } from "../../hooks/cacheApi/useCacheApi";
-import { User } from "../../types/user";
-import { UserPhoto } from "../../types/userPhoto";
 import { privateAxios } from "../../axios";
 import { useInfiniteApi } from "../../hooks/cacheApi/useInfiniteApi";
+
+import { User } from "../../types/user";
+import { UserPhoto } from "../../types/userPhoto";
 
 export const useUserProfile = (username?: string) => {
 	if (!username) {

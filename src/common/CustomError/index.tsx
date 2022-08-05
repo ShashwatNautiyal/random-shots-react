@@ -1,17 +1,22 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import { AxiosError } from "axios";
 import { Link, useLocation } from "react-router-dom";
-import { ROUTES } from "../../router/webRoutes";
+import { Player } from "@lottiefiles/react-lottie-player";
+
 import PrimaryButton from "../PrimaryButton";
+
+import { ROUTES } from "../../router/webRoutes";
+
 import networkError from "./assets/networkError.json";
 import notFoundError from "./assets/notFoundError.json";
 
-const CustomError = ({ statusCode, errMessage }: { statusCode?: number; errMessage: string }) => {
-	const isOffline = statusCode === 0;
-	const errCode = !isOffline ? statusCode : undefined;
+type CustomErrorProps = { statusCode?: number; errMessage: string };
+
+const CustomError = (props: CustomErrorProps) => {
+	const { statusCode, errMessage } = props;
 
 	const location = useLocation();
 
+	const isOffline = statusCode === 0;
+	const errCode = !isOffline ? statusCode : undefined;
 	const lottieSrc = isOffline ? networkError : notFoundError;
 
 	return (

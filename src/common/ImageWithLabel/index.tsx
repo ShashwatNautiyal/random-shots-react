@@ -1,22 +1,21 @@
 import { Link } from "react-router-dom";
-import Image from "../../../../common/Image";
-import { RandomPhoto } from "../../../../utils/types/random";
-import { classNames } from "../../../../utils";
-import { ROUTES } from "../../../../router/webRoutes";
-import { ResultPhoto } from "../../../../utils/types/search";
-import { LikeButton } from "../../../../common/LikeButton";
 
-export const ImageWithLabel = ({
-	photo,
-	index,
-	onClick,
-	className,
-	...rest
-}: {
+import Image from "../Image";
+
+import { RandomPhoto } from "../../utils/types/random";
+import { ResultPhoto } from "../../utils/types/search";
+
+import { ROUTES } from "../../router/webRoutes";
+
+type ImageWithLabelType = {
 	photo: RandomPhoto | ResultPhoto;
 	index: number;
 	onClick: () => void;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+} & React.HTMLAttributes<HTMLDivElement>;
+
+export const ImageWithLabel = (props: ImageWithLabelType) => {
+	const { photo, index, onClick, className, ...rest } = props;
+
 	return (
 		<div {...rest} className={className}>
 			<Image

@@ -1,21 +1,23 @@
-import { BiHeart, BiHome, BiSearch } from "react-icons/bi";
-import { CgAbstract, CgYoutube } from "react-icons/cg";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { ROUTES } from "../../router/webRoutes";
 import { useEffect, useState } from "react";
-import { MdDarkMode, MdLightMode, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks/reducer";
-import { setMode } from "../../store/reducers/theme.reducer";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { BiHome, BiSearch } from "react-icons/bi";
+import { CgAbstract } from "react-icons/cg";
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+
 import { classNames } from "../../utils";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/reducer";
+
+import { ROUTES } from "../../router/webRoutes";
+import { setMode } from "../../store/reducers/theme.reducer";
 
 const Navbar = () => {
 	const navigate = useNavigate();
 
 	const dispatch = useAppDispatch();
-	const mode = useAppSelector((state) => state.theme.mode);
+	const themeMode = useAppSelector((state) => state.theme.mode);
 
-	if (mode === "dark") document.documentElement.classList.add("dark");
-	else if (mode === "light") document.documentElement.classList.remove("dark");
+	if (themeMode === "dark") document.documentElement.classList.add("dark");
+	else if (themeMode === "light") document.documentElement.classList.remove("dark");
 
 	const [searchParams] = useSearchParams();
 	const [searchInput, setSearchInput] = useState(searchParams.get("query") ?? "");
@@ -41,6 +43,7 @@ const Navbar = () => {
 		e.preventDefault();
 		navigate("/search?query=" + searchInput);
 	};
+
 	return (
 		<div
 			className={classNames(
@@ -78,7 +81,7 @@ const Navbar = () => {
 						</button>
 					</form>
 					<div className="flex gap-5 items-center">
-						{mode === "dark" ? (
+						{themeMode === "dark" ? (
 							<MdOutlineDarkMode
 								className="h-7 w-7 cursor-pointer"
 								onClick={() => dispatch(setMode("light"))}

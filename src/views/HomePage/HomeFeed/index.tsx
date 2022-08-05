@@ -1,14 +1,16 @@
-import { useInfiniteRandomPhotos } from "../../../utils/api/randomPhotos";
-import InfiniteScroll from "../../../common/InfiniteScroll";
-import { classNames } from "../../../utils";
-import { ImageWithLabel } from "./ImageWithLabel";
-import Modal from "../../../common/Modal";
 import { Fragment, useEffect, useState } from "react";
-import { RandomPhoto } from "../../../utils/types/random";
+
+import InfiniteScroll from "../../../common/InfiniteScroll";
+import { ImageWithLabel } from "../../../common/ImageWithLabel";
+import Modal from "../../../common/Modal";
+import CustomError from "../../../common/CustomError";
 import PhotoPreview from "../../../common/PhotoPreview";
 import PrimaryButton from "../../../common/PrimaryButton";
-import { HomeLoadingSkeleton } from "../../../common/LoadingSkeleton";
-import CustomError from "../../../common/CustomError";
+import { HomeLoading } from "../../../common/LoadingSkeleton";
+
+import { RandomPhoto } from "../../../utils/types/random";
+import { useInfiniteRandomPhotos } from "../../../utils/api/randomPhotos";
+import { classNames } from "../../../utils";
 
 export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 	const {
@@ -71,9 +73,7 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 				hasNextPage={hasNextPage}
 				isFetchingNextPage={isFetchingNextPage}
 				loadingLayout={
-					<div className="xl:w-10/12 w-full max-w-[1400px] mx-auto">
-						{HomeLoadingSkeleton}
-					</div>
+					<div className="xl:w-10/12 w-full max-w-[1400px] mx-auto">{HomeLoading}</div>
 				}
 			>
 				<div className="text-center">

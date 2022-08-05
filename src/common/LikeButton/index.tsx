@@ -1,17 +1,19 @@
-import { CSSProperties, useRef, useState } from "react";
+import { CSSProperties, useState } from "react";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+
 import { classNames } from "../../utils";
 
-export const LikeButton = ({
-	photo,
-	style,
-}: {
+type LikeButtonProps = {
 	photo: {
 		color: string;
 		likes: number;
 	};
 	style?: CSSProperties;
-}) => {
+};
+
+export const LikeButton = (props: LikeButtonProps) => {
+	const { photo, style } = props;
+
 	const [isLiked, setIsLiked] = useState(false);
 
 	return (
