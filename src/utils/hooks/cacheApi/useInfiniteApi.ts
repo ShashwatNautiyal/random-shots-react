@@ -58,12 +58,14 @@ export const useInfiniteApi = <DataT, ErrorT>(
 ): InfiniteApiReturnType<DataT, ErrorT> => {
 	const dispatch = useAppDispatch();
 
+	// Default options
 	const {
 		staleTime = 5 * 60 * 1000,
 		storeInStorage = "session",
 		refetchOnStale = true,
 	} = options ?? {};
 
+	// Join all the keys to one key string
 	const key = _key.join(" ");
 
 	const cache = useAppSelector((state) => state.apiCache);
