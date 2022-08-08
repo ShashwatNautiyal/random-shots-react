@@ -6,7 +6,7 @@ import {
 	setErrorResponse,
 	setFetchingResponse,
 	setSuccessResponse,
-} from "../../../store/reducers/apiCache.reducer";
+} from "../../../store/reducers/apiCache";
 import { useAppDispatch, useAppSelector } from "../reducer";
 
 type SuccessType<DataT> = {
