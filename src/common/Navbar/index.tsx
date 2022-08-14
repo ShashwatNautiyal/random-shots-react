@@ -8,7 +8,7 @@ import { classNames } from "../../utils";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/reducer";
 
 import { ROUTES } from "../../router/webRoutes";
-import { setMode } from "../../store/reducers/theme.reducer";
+import { setMode } from "../../store/reducers/theme";
 
 const Navbar = () => {
 	const navigate = useNavigate();

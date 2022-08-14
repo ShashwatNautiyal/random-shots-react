@@ -4,7 +4,7 @@ import {
 	setSuccessResponse,
 	setFetchingResponse,
 	setErrorResponse,
-} from "../../../store/reducers/apiCache.reducer";
+} from "../../../store/reducers/apiCache";
 import { useAppDispatch, useAppSelector } from "../reducer";
 
 import { useCacheStorage } from "./useCacheStorage";

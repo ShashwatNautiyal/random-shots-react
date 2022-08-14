@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import apiCache from "./reducers/apiCache.reducer";
-import themeReducer from "./reducers/theme.reducer";
+import apiCache from "./reducers/apiCache";
+import themeReducer from "./reducers/theme";
 
 const store = configureStore({
 	reducer: {

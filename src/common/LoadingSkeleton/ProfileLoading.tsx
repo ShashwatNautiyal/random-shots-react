@@ -3,7 +3,7 @@ import { LoadingBox } from "./LoadingBox";
 const ProfileLoading = (
 	<>
 		<div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
-			<LoadingBox boxes={6} showBig={false} className="md:block hidden " />
+			<LoadingBox boxes={3} showBig={false} className="md:block hidden " />
 			<LoadingBox boxes={4} showBig={false} className="md:hidden sm:block hidden" />
 			<LoadingBox boxes={1} showBig={false} className="sm:hidden block" />
 		</div>
