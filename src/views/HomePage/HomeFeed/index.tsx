@@ -33,8 +33,6 @@ export const HomeFeed = ({ topicId }: { topicId?: string }) => {
 		if (!expiresIn) return;
 		const expiresInMiliseconds = new Date(expiresIn).getTime() - new Date().getTime();
 
-		console.log(expiresInMiliseconds);
-
 		if (expiresInMiliseconds < 1) {
 			setShowNewPhotosBtn(false);
 			return;
