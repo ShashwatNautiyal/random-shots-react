@@ -23,7 +23,7 @@ export const useTopicList = (
 				})
 				.then((res) => res.data),
 		{
-			staleTime: 60 * 1000,
+			staleTime: 5 * 60 * 1000,
 			storeInStorage: "local",
 		}
 	);

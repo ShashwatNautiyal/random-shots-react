@@ -65,8 +65,6 @@ export const useCacheApi = <DataT, ErrorT>(
 		refetchOnStale = true,
 	} = options ?? {};
 
-	console.log(cacheData, isStale);
-
 	useEffect(() => {
 		if (cacheData) {
 			setStatus(cacheData.status);

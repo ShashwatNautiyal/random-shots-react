@@ -35,7 +35,7 @@ export const useInfiniteRandomPhotos = (count = 22, collections?: string, topics
 				lastPage.nextPage <= lastPage.totalPages ? lastPage.nextPage : undefined,
 		},
 		{
-			staleTime: 60 * 1000,
+			staleTime: 5 * 60 * 1000,
 			storeInStorage: "local",
 		}
 	);
