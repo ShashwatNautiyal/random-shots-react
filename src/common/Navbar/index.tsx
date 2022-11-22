@@ -58,7 +58,7 @@ const Navbar = () => {
 					<Link to={ROUTES.HOME.pathName}>
 						<p className="flex md:gap-3 gap-1 items-center">
 							<CgAbstract className="md:h-8 md:w-8 h-6 w-6" />
-							<span className="font-satisfy text-3xl">Growwgram</span>
+							<span className="font-satisfy text-3xl">Random Shots</span>
 						</p>
 					</Link>
 					<form onSubmit={handleSearch} className="flex gap-6 items-center">
