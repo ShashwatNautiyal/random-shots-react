@@ -88,7 +88,6 @@ const Navbar = () => {
   };
 
   const handleSuggestionClick = (value: any) => {
-    console.log("clicked");
     setSearchInput(value);
     setShowSuggestion(false);
     setSearchClicked(true);
