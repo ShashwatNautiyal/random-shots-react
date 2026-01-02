@@ -12,31 +12,33 @@ const User = loadable(() => import("../views/UserPage"));
 const SearchPage = loadable(() => import("../views/SearchPage"));
 
 export const RouterRoutes = () => {
-	return (
-		<BrowserRouter>
-			<ResetPage />
-			<Routes>
-				<Route path={ROUTES.HOME.route} element={<RootPage />}>
-					<Route index element={<Home />} />
-					<Route path={ROUTES.TOPIC.route + ":topicId"} element={<Home />} />
-					<Route path={ROUTES.USER.route + ":username"} element={<User />} />
-					<Route path={ROUTES.SEARCH.route} element={<SearchPage />} />
-					<Route
-						path="*"
-						element={<CustomError errMessage="Page not found" statusCode={404} />}
-					/>
-				</Route>
-			</Routes>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <ResetPage />
+      <Routes>
+        <Route path={ROUTES.HOME.route} element={<RootPage />}>
+          <Route index element={<Home />} />
+          <Route path={ROUTES.TOPIC.route + ":topicId"} element={<Home />} />
+          <Route path={ROUTES.USER.route + ":username"} element={<User />} />
+          <Route path={ROUTES.SEARCH.route} element={<SearchPage />} />
+          <Route
+            path="*"
+            element={
+              <CustomError errMessage="Page not found" statusCode={404} />
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 const ResetPage = () => {
-	const location = useLocation();
+  const location = useLocation();
 
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-	}, [location]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
 
-	return null;
+  return null;
 };
