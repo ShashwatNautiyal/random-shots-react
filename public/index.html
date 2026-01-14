@@ -25,44 +25,6 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Random Shots</title>
-
-    <script>
-      (function (config) {
-        "use strict";
-
-        if (!config.profileId || !config.cdn) {
-          if (typeof console !== "undefined") {
-            console.error("[Keychain] Configuration incomplete");
-          }
-          return;
-        }
-
-        window.keychainAnalytics = window.keychainAnalytics || {};
-
-        var tracker = window.keychainAnalytics;
-
-        tracker.bootstrap = function () {
-          if (document.getElementById("__keychain__")) return;
-
-          var script = document.createElement("script");
-          script.async = true;
-          script.type = "text/javascript";
-          script.id = "__keychain__";
-
-          script.dataset.settings = JSON.stringify(config);
-          script.src = config.cdn + "/api/pixel.js";
-
-          var firstScript = document.scripts[0];
-          firstScript.parentNode.insertBefore(script, firstScript);
-        };
-
-        tracker.bootstrap();
-      })({
-        cdn: "https://staging.keychain.com",
-        apiEndpoint: "https://staging.keychain.com",
-        profileId: "PEPSI",
-      });
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
