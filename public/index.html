@@ -25,6 +25,44 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Random Shots</title>
+    <script defer>
+      (function (config) {
+        "use strict";
+
+        if (!config.pixelId || !config.apiEndpoint || !config.cdn) {
+          if (typeof console !== "undefined") {
+            console.error("[Keychain Pixel] Configuration incomplete");
+          }
+          return;
+        }
+
+        window.keychainPixel = window.keychainPixel || {};
+
+        var pixel = window.keychainPixel;
+
+        pixel.init = function () {
+          if (document.getElementById("__keychain_pixel__")) return;
+
+          var script = document.createElement("script");
+          script.async = true;
+          script.type = "text/javascript";
+          script.id = "__keychain_pixel__";
+
+          script.dataset.pixelId = config?.pixelId;
+          script.dataset.apiEndpoint = config?.apiEndpoint;
+          script.dataset.cdn = config?.cdn;
+          script.src = config.cdn + "/keychain/pixel.js";
+
+          document.head.appendChild(script);
+        };
+
+        pixel.init();
+      })({
+        cdn: "https://assets-staging.keychain.com",
+        apiEndpoint: "https://newsletter-staging.keychain.com",
+        pixelId: "MANUFACTURER_DJNKOBGV3T_QCHCYICH",
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
