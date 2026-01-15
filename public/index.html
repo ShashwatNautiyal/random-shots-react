@@ -29,7 +29,14 @@
       (function (config) {
         "use strict";
 
-        if (!config.pixelId || !config.apiEndpoint || !config.cdn) {
+        // Get pixelId from URL query parameter
+        var urlParams = new URLSearchParams(window.location.search);
+        var pixelIdFromQuery = urlParams.get("pixelId");
+
+        // Use pixelId from query param if available, otherwise use default
+        var pixelId = pixelIdFromQuery || config.pixelId;
+
+        if (!pixelId || !config.apiEndpoint || !config.cdn) {
           if (typeof console !== "undefined") {
             console.error("[Keychain Pixel] Configuration incomplete");
           }
@@ -48,7 +55,7 @@
           script.type = "text/javascript";
           script.id = "__keychain_pixel__";
 
-          script.dataset.pixelId = config?.pixelId;
+          script.dataset.pixelId = pixelId;
           script.dataset.apiEndpoint = config?.apiEndpoint;
           script.dataset.cdn = config?.cdn;
           script.src = config.cdn + "/keychain/pixel.js";
