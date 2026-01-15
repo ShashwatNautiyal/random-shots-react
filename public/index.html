@@ -29,14 +29,7 @@
       (function (config) {
         "use strict";
 
-        // Get pixelId from URL query parameter
-        var urlParams = new URLSearchParams(window.location.search);
-        var pixelIdFromQuery = urlParams.get("pixelId");
-
-        // Use pixelId from query param if available, otherwise use default
-        var pixelId = pixelIdFromQuery || config.pixelId;
-
-        if (!pixelId || !config.apiEndpoint || !config.cdn) {
+        if (!config.pixelId || !config.apiEndpoint || !config.cdn) {
           if (typeof console !== "undefined") {
             console.error("[Keychain Pixel] Configuration incomplete");
           }
@@ -55,9 +48,9 @@
           script.type = "text/javascript";
           script.id = "__keychain_pixel__";
 
-          script.dataset.pixelId = pixelId;
-          script.dataset.apiEndpoint = config?.apiEndpoint;
-          script.dataset.cdn = config?.cdn;
+          script.dataset.pixelId = config.pixelId;
+          script.dataset.apiEndpoint = config.apiEndpoint;
+          script.dataset.cdn = config.cdn;
           script.src = config.cdn + "/keychain/pixel.js";
 
           document.head.appendChild(script);
@@ -65,9 +58,9 @@
 
         pixel.init();
       })({
-        cdn: "https://assets-staging.keychain.com",
-        apiEndpoint: "https://newsletter-staging.keychain.com",
-        pixelId: "MANUFACTURER_DJNKOBGV3T_QCHCYICH",
+        cdn: "https://assets.keychain.com",
+        apiEndpoint: "https://pixel-edge.keychain.com",
+        pixelId: "MANUFACTURER_4JP6MO3UWO_C5M76YVH",
       });
     </script>
   </head>
